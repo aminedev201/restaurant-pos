@@ -28,7 +28,7 @@
         }
 
         .email-header {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            background: linear-gradient(135deg, #ea580c 0%, #f59e0b 100%);
             padding: 40px 30px;
             text-align: center;
         }
@@ -64,7 +64,7 @@
 
         .reset-button {
             display: inline-block;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            background: linear-gradient(135deg, #ea580c 0%, #f59e0b 100%);
             color: #ffffff;
             padding: 16px 40px;
             text-decoration: none;
@@ -76,7 +76,7 @@
 
         .reset-button:hover {
             transform: translateY(-2px);
-            box-shadow: 0 8px 16px rgba(102, 126, 234, 0.4);
+            box-shadow: 0 8px 16px rgba(234, 88, 12, 0.4);
         }
 
         .expiry-notice {
@@ -111,7 +111,7 @@
         }
 
         .alternative-link a {
-            color: #667eea;
+            color: #ea580c;
             word-break: break-all;
             font-size: 12px;
         }

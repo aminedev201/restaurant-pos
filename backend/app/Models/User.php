@@ -18,6 +18,7 @@ class User extends Authenticatable implements MustVerifyEmail
         'name',
         'email',
         'password',
+        'status',
     ];
 
     protected $hidden = [
@@ -30,9 +31,14 @@ class User extends Authenticatable implements MustVerifyEmail
         return [
             'email_verified_at' => 'datetime',
             'password' => 'hashed',
+            'status' => 'boolean',
         ];
     }
 
+    public function isActive(): bool
+    {
+        return $this->status;
+    }
     /**
      * Send the email verification notification.
      *

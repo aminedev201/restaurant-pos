@@ -19,7 +19,7 @@
             padding: 20px;
         }
         .header {
-            background-color: #4CAF50;
+            background: linear-gradient(135deg, #ea580c 0%, #f59e0b 100%);
             color: white;
             padding: 10px;
             text-align: center;
@@ -33,7 +33,7 @@
         .button {
             display: inline-block;
             padding: 12px 30px;
-            background-color: #4CAF50;
+            background: linear-gradient(135deg, #ea580c 0%, #f59e0b 100%);
             color: white;
             text-decoration: none;
             border-radius: 5px;
@@ -47,7 +47,7 @@
         }
         .link {
             word-break: break-all;
-            color: #4CAF50;
+            color: #ea580c;
         }
     </style>
 </head>

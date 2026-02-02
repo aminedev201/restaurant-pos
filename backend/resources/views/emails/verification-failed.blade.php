@@ -13,7 +13,7 @@
 
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+            background: linear-gradient(135deg, #ea580c 0%, #f59e0b 100%);
             min-height: 100vh;
             display: flex;
             align-items: center;
@@ -46,7 +46,7 @@
         .error-icon {
             width: 80px;
             height: 80px;
-            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+            background: linear-gradient(135deg, #ea580c 0%, #f59e0b 100%);
             border-radius: 50%;
             display: flex;
             align-items: center;
@@ -90,7 +90,7 @@
 
         .btn {
             display: inline-block;
-            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+            background: linear-gradient(135deg, #ea580c 0%, #f59e0b 100%);
             color: white;
             padding: 15px 40px;
             border-radius: 10px;
@@ -98,13 +98,13 @@
             font-weight: 600;
             font-size: 16px;
             transition: all 0.3s ease;
-            box-shadow: 0 4px 15px rgba(245, 87, 108, 0.4);
+            box-shadow: 0 4px 15px rgba(234, 88, 12, 0.4);
             margin: 0 10px 10px;
         }
 
         .btn:hover {
             transform: translateY(-2px);
-            box-shadow: 0 6px 20px rgba(245, 87, 108, 0.6);
+            box-shadow: 0 6px 20px rgba(234, 88, 12, 0.6);
         }
 
         .btn-secondary {
@@ -126,7 +126,7 @@
 
         .countdown {
             font-weight: 600;
-            color: #f5576c;
+            color: #ea580c;
         }
 
         .buttons {

@@ -26,7 +26,14 @@ class ResetPasswordRequest extends FormRequest
         return [
             'token' => 'required|string',
             'email' => 'required|email|exists:users,email',
-            'password' => 'required|string|min:8|confirmed',
+            'password' => [
+                'required',
+                'string',
+                'min:8',
+                'max:30',
+                'confirmed',
+                'regex:/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&#])[A-Za-z\d@$!%*?&#]+$/'
+            ],
         ];
     }
 
@@ -44,7 +51,9 @@ class ResetPasswordRequest extends FormRequest
             'email.exists' => 'We could not find an account with this email address',
             'password.required' => 'Password is required',
             'password.min' => 'Password must be at least 8 characters',
+            'password.max' => 'Password must be at most 30 characters',
             'password.confirmed' => 'Password confirmation does not match',
+            'password.regex' => 'Password must contain at least one uppercase letter, one lowercase letter, one number, and one special character (@$!%*?&#)',
         ];
     }
 

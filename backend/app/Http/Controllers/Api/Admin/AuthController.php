@@ -15,6 +15,7 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Support\Facades\Password;
 use Illuminate\Auth\Events\PasswordReset;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Str;
 
 class AuthController extends Controller
@@ -43,6 +44,7 @@ class AuthController extends Controller
                         'name' => $user->name,
                         'email' => $user->email,
                         'email_verified_at' => $user->email_verified_at,
+                        'status' => $user->status,
                         'created_at' => $user->created_at,
                     ]
                 ]
@@ -74,10 +76,20 @@ class AuthController extends Controller
 
             // Check if email is verified
             if (!$user->hasVerifiedEmail()) {
+                Auth::logout();
                 return response()->json([
                     'success' => false,
                     'message' => 'Please verify your email address before logging in.',
                     'email_verified' => false
+                ], 403);
+            }
+
+             // Check if user is active
+            if (!$user->isActive()) {
+                Auth::logout();
+                return response()->json([
+                    'success' => false,
+                    'message' => 'Your account has been deactivated. Please contact support.'
                 ], 403);
             }
 
@@ -96,6 +108,7 @@ class AuthController extends Controller
                         'name' => $user->name,
                         'email' => $user->email,
                         'email_verified_at' => $user->email_verified_at,
+                        'status' => $user->status,
                         'created_at' => $user->created_at,
                     ],
                     'access_token' => $token,
@@ -142,15 +155,17 @@ class AuthController extends Controller
     public function user(Request $request)
     {
         try {
+            $user = $request->user();
             return response()->json([
                 'success' => true,
                 'data' => [
                     'user' => [
-                        'id' => $request->user()->id,
-                        'name' => $request->user()->name,
-                        'email' => $request->user()->email,
-                        'email_verified_at' => $request->user()->email_verified_at,
-                        'created_at' => $request->user()->created_at,
+                        'id' => $user->id,
+                        'name' => $user->name,
+                        'email' => $user->email,
+                        'email_verified_at' => $user->email_verified_at,
+                        'status' => $user->status,
+                        'created_at' => $user->created_at,
                     ]
                 ]
             ], 200);
@@ -278,6 +293,78 @@ class AuthController extends Controller
         }
     }
 
+     /**
+     * Validate password reset token
+     */
+    public function validateResetToken(Request $request)
+    {
+        try {
+            $request->validate([
+                'token' => 'required|string',
+                'email' => 'required|email'
+            ]);
+
+            // Check if user exists
+            $user = User::where('email', $request->email)->first();
+
+            if (!$user) {
+                return response()->json([
+                    'success' => false,
+                    'message' => 'Invalid or expired reset token',
+                    'valid' => false
+                ], 404);
+            }
+
+            // Check if token exists and is valid
+            $passwordReset = DB::table('password_reset_tokens')
+                ->where('email', $request->email)
+                ->first();
+
+            if (!$passwordReset) {
+                return response()->json([
+                    'success' => false,
+                    'message' => 'Invalid or expired reset token',
+                    'valid' => false
+                ], 400);
+            }
+
+            // Verify the token
+            if (!Hash::check($request->token, $passwordReset->token)) {
+                return response()->json([
+                    'success' => false,
+                    'message' => 'Invalid reset token',
+                    'valid' => false
+                ], 400);
+            }
+
+            // Check if token is expired (default is 60 minutes)
+            $expiry = config('auth.passwords.users.expire', 60);
+            $createdAt = \Carbon\Carbon::parse($passwordReset->created_at);
+
+            if ($createdAt->addMinutes($expiry)->isPast()) {
+                return response()->json([
+                    'success' => false,
+                    'message' => 'Reset token has expired',
+                    'valid' => false
+                ], 400);
+            }
+
+            return response()->json([
+                'success' => true,
+                'message' => 'Token is valid',
+                'valid' => true
+            ], 200);
+
+        } catch (\Exception $e) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Failed to validate token',
+                'valid' => false,
+                'error' => $e->getMessage()
+            ], 500);
+        }
+    }
+
     /**
      * Reset password
      */
@@ -317,4 +404,42 @@ class AuthController extends Controller
             ], 500);
         }
     }
+
+
+    /**
+     * Check email verification status
+     */
+    public function checkVerificationStatus(Request $request)
+    {
+        try {
+            $request->validate([
+                'email' => 'required|email'
+            ]);
+
+            $user = User::where('email', $request->email)->first();
+
+            if (!$user) {
+                return response()->json([
+                    'success' => false,
+                    'message' => 'Failed to check verification status',
+                ], 404);
+            }
+
+            return response()->json([
+                'success' => true,
+                'data' => [
+                    'email_verified' => $user->hasVerifiedEmail(),
+                    'email_verified_at' => $user->email_verified_at,
+                ]
+            ], 200);
+
+        } catch (\Exception $e) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Failed to check verification status',
+                'error' => $e->getMessage()
+            ], 500);
+        }
+    }
+
 }
