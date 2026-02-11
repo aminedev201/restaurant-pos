@@ -1,6 +1,6 @@
 import { Navigate, useLocation } from 'react-router-dom';
 import PropTypes from 'prop-types';
-import { useAuth } from '../contexts/Authcontext';
+import { useAuth } from '../contexts/AuthContext';
 import { ROUTES } from '../config/routes';
 import Loading from '../components/common/Loading';
 

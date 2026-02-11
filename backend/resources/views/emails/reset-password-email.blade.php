@@ -12,227 +12,194 @@
         }
 
         body {
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
-            background-color: #f3f4f6;
-            padding: 20px;
-            line-height: 1.6;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Arial, sans-serif;
+            background-color: #f5f5f5;
+            padding: 0;
+            margin: 0;
         }
 
         .email-container {
             max-width: 600px;
             margin: 0 auto;
             background-color: #ffffff;
-            border-radius: 12px;
-            overflow: hidden;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
         }
 
-        .email-header {
-            background: linear-gradient(135deg, #ea580c 0%, #f59e0b 100%);
-            padding: 40px 30px;
+        .header {
+            background: linear-gradient(135deg, #CD5700 0%, #ffa333 100%);
+            padding: 30px 20px;
             text-align: center;
         }
 
-        .email-header h1 {
+        .logo {
             color: #ffffff;
-            font-size: 28px;
-            font-weight: 700;
-            margin: 0;
-        }
-
-        .email-body {
-            padding: 40px 30px;
-        }
-
-        .greeting {
-            font-size: 20px;
-            color: #1f2937;
-            margin-bottom: 20px;
-            font-weight: 600;
+            font-size: 42px;
+            font-weight: bold;
+            letter-spacing: 2px;
+            text-transform: uppercase;
         }
 
         .content {
-            color: #4b5563;
-            font-size: 16px;
-            margin-bottom: 20px;
+            padding: 40px 30px;
+            text-align: center;
         }
 
-        .button-container {
+        h1 {
+            font-size: 28px;
+            color: #1a1a1a;
+            margin-bottom: 25px;
+            font-weight: 600;
+        }
+
+        .message {
+            font-size: 15px;
+            color: #4a4a4a;
+            line-height: 1.6;
+            margin-bottom: 30px;
             text-align: center;
-            margin: 35px 0;
         }
 
         .reset-button {
             display: inline-block;
-            background: linear-gradient(135deg, #ea580c 0%, #f59e0b 100%);
+            background: linear-gradient(135deg, #CD5700 0%, #ffa333 100%);
             color: #ffffff;
-            padding: 16px 40px;
+            padding: 14px 40px;
             text-decoration: none;
-            border-radius: 8px;
-            font-weight: 600;
             font-size: 16px;
-            transition: transform 0.2s, box-shadow 0.2s;
+            font-weight: 500;
+            border-radius: 3px;
+            margin: 10px 0 30px 0;
+            transition: opacity 0.3s;
         }
 
         .reset-button:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 8px 16px rgba(234, 88, 12, 0.4);
+            opacity: 0.9;
         }
 
         .expiry-notice {
-            background-color: #fef3c7;
-            border-left: 4px solid #f59e0b;
-            padding: 15px;
-            margin: 25px 0;
-            border-radius: 4px;
-        }
-
-        .expiry-notice p {
-            color: #92400e;
             font-size: 14px;
-            margin: 0;
+            color: #666666;
+            margin-bottom: 25px;
+            padding: 12px 20px;
+            background-color: #fff5e6;
+            border-radius: 4px;
+            display: inline-block;
         }
 
         .expiry-notice strong {
-            color: #78350f;
+            color: #CD5700;
         }
 
-        .alternative-link {
-            background-color: #f3f4f6;
-            padding: 20px;
-            border-radius: 8px;
-            margin: 25px 0;
-        }
-
-        .alternative-link p {
-            color: #6b7280;
+        .alternative-text {
             font-size: 13px;
-            margin-bottom: 10px;
+            color: #666666;
+            margin-bottom: 15px;
+            margin-top: 30px;
         }
 
-        .alternative-link a {
-            color: #ea580c;
-            word-break: break-all;
+        .url-link {
             font-size: 12px;
+            color: #0066cc;
+            word-break: break-all;
+            display: block;
+            margin: 0 auto;
+            max-width: 90%;
+            text-decoration: none;
         }
 
         .security-notice {
-            background-color: #fef2f2;
-            border-left: 4px solid #ef4444;
-            padding: 15px;
-            margin: 25px 0;
-            border-radius: 4px;
+            font-size: 13px;
+            color: #666666;
+            margin-top: 30px;
+            padding-top: 25px;
+            border-top: 1px solid #e5e5e5;
         }
 
-        .security-notice p {
-            color: #991b1b;
-            font-size: 14px;
-            margin: 0;
-        }
-
-        .email-footer {
-            background-color: #f9fafb;
-            padding: 30px;
+        .footer {
+            background-color: #fafafa;
+            padding: 25px 20px;
             text-align: center;
-            border-top: 1px solid #e5e7eb;
+            border-top: 1px solid #e5e5e5;
         }
 
-        .footer-text {
-            color: #6b7280;
-            font-size: 14px;
-            margin-bottom: 10px;
+        .footer-links {
+            margin-bottom: 15px;
         }
 
-        .app-name {
-            color: #1f2937;
-            font-weight: 600;
+        .footer-link {
+            color: #666666;
+            text-decoration: none;
+            font-size: 13px;
+            margin: 0 15px;
+            display: inline-block;
         }
 
-        .divider {
-            height: 1px;
-            background-color: #e5e7eb;
-            margin: 25px 0;
+        .footer-link:hover {
+            text-decoration: underline;
+        }
+
+        .copyright {
+            font-size: 12px;
+            color: #999999;
+            margin-top: 10px;
         }
 
         @media only screen and (max-width: 600px) {
-            .email-body {
+            .content {
                 padding: 30px 20px;
             }
 
-            .email-header {
-                padding: 30px 20px;
-            }
-
-            .email-header h1 {
+            h1 {
                 font-size: 24px;
             }
 
-            .reset-button {
-                padding: 14px 30px;
-                font-size: 15px;
+            .footer-link {
+                display: block;
+                margin: 8px 0;
             }
         }
     </style>
 </head>
 <body>
     <div class="email-container">
-        <!-- Header -->
-        <div class="email-header">
-            <h1>🔐 Password Reset Request</h1>
+        <!-- Header with Logo -->
+        <div class="header">
+            <div class="logo">{{ $appName }}</div>
         </div>
 
-        <!-- Body -->
-        <div class="email-body">
-            <p class="greeting">Hello, {{ $user->name }}</p>
+        <!-- Main Content -->
+        <div class="content">
+            <h1>Password Reset Request</h1>
 
-            <p class="content">
-                You are receiving this email because we received a password reset request for your account.
+            <p class="message">
+                You are receiving this email because we received a password reset request for your account. Please click below to reset your password:
             </p>
 
-            <p class="content">
-                Click the button below to reset your password:
-            </p>
+            <a href="{{ $resetUrl }}" class="reset-button">Reset Password</a>
 
-            <!-- Reset Button -->
-            <div class="button-container">
-                <a href="{{ $resetUrl }}" class="reset-button">Reset Password</a>
-            </div>
-
-            <!-- Expiry Notice -->
             <div class="expiry-notice">
-                <p>
-                    <strong>⏰ Important:</strong> This password reset link will expire in <strong>{{ $expiryMinutes }} minutes</strong>.
-                </p>
+                ⏰ This link will expire in <strong>{{ $expiryMinutes }} minutes</strong>
             </div>
 
-            <!-- Alternative Link -->
-            <div class="alternative-link">
-                <p><strong>Button not working?</strong> Copy and paste this link into your browser:</p>
-                <a href="{{ $resetUrl }}">{{ $resetUrl }}</a>
-            </div>
+            <p class="alternative-text">
+                If this doesn't work, copy and paste the following link into your browser:
+            </p>
 
-            <div class="divider"></div>
+            <a href="{{ $resetUrl }}" class="url-link">{{ $resetUrl }}</a>
 
-            <!-- Security Notice -->
-            <div class="security-notice">
-                <p>
-                    <strong>🛡️ Security Notice:</strong> If you did not request a password reset, please ignore this email. No changes will be made to your account.
-                </p>
-            </div>
-
-            <p class="content" style="margin-top: 30px;">
-                If you're having trouble or didn't request this reset, please contact our support team immediately.
+            <p class="security-notice">
+                If you did not request a password reset, no further action is required. Your account remains secure.
             </p>
         </div>
 
         <!-- Footer -->
-        <div class="email-footer">
-            <p class="footer-text">
-                Regards,<br>
-                <span class="app-name">{{ $appName }}</span>
-            </p>
-            <p class="footer-text" style="font-size: 12px; color: #9ca3af; margin-top: 15px;">
-                This is an automated message, please do not reply to this email.
+        <div class="footer">
+            <div class="footer-links">
+                <a href="#" class="footer-link">Contact Us</a>
+                <a href="#" class="footer-link">Terms & Conditions</a>
+                <a href="#" class="footer-link">Privacy Policy</a>
+            </div>
+            <p class="copyright">
+                © {{ $year }} {{ $appName }}. All rights reserved.
             </p>
         </div>
     </div>

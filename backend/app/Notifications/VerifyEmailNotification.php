@@ -18,7 +18,7 @@ class VerifyEmailNotification extends VerifyEmailBase
     {
         return URL::temporarySignedRoute(
             'verification.verify',
-            now()->addMinutes(60),
+            now()->addMinutes(config('auth.verification.expire',60)),
             [
                 'id' => $notifiable->getKey(),
                 'hash' => sha1($notifiable->getEmailForVerification()),
@@ -34,13 +34,15 @@ class VerifyEmailNotification extends VerifyEmailBase
      */
     public function toMail($notifiable)
     {
-        $verificationUrl = $this->verificationUrl($notifiable);
-
+        $appName =config('app.name','Your Company');
         return (new MailMessage)
-            ->subject('Verify Email Address')
+            ->subject('Verify Email Address - ' . $appName)
             ->view('emails.verify-email', [
                 'user' => $notifiable,
-                'verificationUrl' => $verificationUrl
+                'year' =>  date('Y'),
+                'expiryMinutes' => config('auth.verification.expire', 60),
+                'appName' => $appName,
+                'verificationUrl' => $this->verificationUrl($notifiable)
             ]);
     }
 }

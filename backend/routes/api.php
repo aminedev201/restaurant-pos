@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Api\Admin\AuthController;
+use App\Http\Controllers\Api\Admin\CategoryController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -30,4 +31,12 @@ Route::middleware('guest:sanctum')->group(function () {
 Route::middleware(['auth:sanctum', 'verified', 'user.status'])->group(function () {
     Route::post('/logout', [AuthController::class, 'logout']);
     Route::get('/user', [AuthController::class, 'user']);
+
+    // Categories
+    Route::apiResource('categories', CategoryController::class);
+
+    // Import and Bulk Delete
+    Route::post('categories/import', [CategoryController::class, 'import']);
+    Route::post('categories/bulk-delete', [CategoryController::class, 'bulkDelete']);
+
 });

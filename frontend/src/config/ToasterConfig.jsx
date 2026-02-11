@@ -12,13 +12,13 @@ const ToasterConfig = () => {
         },
         success: {
           iconTheme: {
-            primary: '#ea580c', 
+            primary: '#CD5700', // primary-500
             secondary: '#fff',
           },
         },
         error: {
           iconTheme: {
-            primary: '#ef4444', 
+            primary: '#ef4444', // red-500
             secondary: '#fff',
           },
         },

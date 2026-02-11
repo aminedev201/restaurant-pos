@@ -40,17 +40,15 @@ class ResetPasswordNotification extends Notification
      */
     public function toMail(object $notifiable): MailMessage
     {
-        $resetUrl = url(config('app.frontend_url') . '/reset-password?token=' . $this->token . '&email=' . urlencode($notifiable->email));
-
-        $expiryMinutes = config('auth.passwords.' . config('auth.defaults.passwords') . '.expire');
 
         $appName = config('app.name');
 
         return (new MailMessage)
             ->subject('Reset Password Notification - ' . $appName)
             ->view('emails.reset-password-email', [
-                'resetUrl' => $resetUrl,
-                'expiryMinutes' => $expiryMinutes,
+                'resetUrl' => url(config('app.frontend_url') . '/reset-password?token=' . $this->token . '&email=' . urlencode($notifiable->email)),
+                'expiryMinutes' => config('auth.passwords.' . config('auth.defaults.passwords') . '.expire',60),
+                'year' =>  date('Y'),
                 'appName' => $appName,
                 'user' => $notifiable,
             ]);

@@ -3,77 +3,191 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Verify Email Address</title>
+    <title>Email Address Verification</title>
     <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
         body {
-            font-family: Arial, sans-serif;
-            line-height: 1.6;
-            color: #333;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Arial, sans-serif;
+            background-color: #f5f5f5;
+            padding: 0;
+            margin: 0;
+        }
+
+        .email-container {
             max-width: 600px;
             margin: 0 auto;
-            padding: 20px;
+            background-color: #ffffff;
         }
-        .container {
-            background-color: #f4f4f4;
-            border-radius: 5px;
-            padding: 20px;
-        }
+
         .header {
-            background: linear-gradient(135deg, #ea580c 0%, #f59e0b 100%);
-            color: white;
-            padding: 10px;
+            background: linear-gradient(135deg, #CD5700 0%, #ffa333 100%);
+            padding: 30px 20px;
             text-align: center;
-            border-radius: 5px 5px 0 0;
         }
+
+        .logo {
+            color: #ffffff;
+            font-size: 42px;
+            font-weight: bold;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+        }
+
         .content {
-            background-color: white;
-            padding: 30px;
-            border-radius: 0 0 5px 5px;
-        }
-        .button {
-            display: inline-block;
-            padding: 12px 30px;
-            background: linear-gradient(135deg, #ea580c 0%, #f59e0b 100%);
-            color: white;
-            text-decoration: none;
-            border-radius: 5px;
-            margin: 20px 0;
-        }
-        .footer {
-            margin-top: 20px;
+            padding: 40px 30px;
             text-align: center;
-            font-size: 12px;
-            color: #777;
         }
-        .link {
+
+        h1 {
+            font-size: 28px;
+            color: #1a1a1a;
+            margin-bottom: 25px;
+            font-weight: 600;
+        }
+
+        .message {
+            font-size: 15px;
+            color: #4a4a4a;
+            line-height: 1.6;
+            margin-bottom: 30px;
+            text-align: center;
+        }
+
+        .verify-button {
+            display: inline-block;
+            background: linear-gradient(135deg, #CD5700 0%, #ffa333 100%);
+            color: #ffffff;
+            padding: 14px 40px;
+            text-decoration: none;
+            font-size: 16px;
+            font-weight: 500;
+            border-radius: 3px;
+            margin: 10px 0 30px 0;
+            transition: opacity 0.3s;
+        }
+
+        .verify-button:hover {
+            opacity: 0.9;
+        }
+
+        .expiry-notice {
+            font-size: 14px;
+            color: #666666;
+            margin-bottom: 25px;
+            padding: 12px 20px;
+            background-color: #fff5e6;
+            border-radius: 4px;
+            display: inline-block;
+        }
+
+        .expiry-notice strong {
+            color: #CD5700;
+        }
+
+        .alternative-text {
+            font-size: 13px;
+            color: #666666;
+            margin-bottom: 15px;
+        }
+
+        .url-link {
+            font-size: 12px;
+            color: #0066cc;
             word-break: break-all;
-            color: #ea580c;
+            display: block;
+            margin: 0 auto;
+            max-width: 90%;
+            text-decoration: none;
+        }
+
+        .footer {
+            background-color: #fafafa;
+            padding: 25px 20px;
+            text-align: center;
+            border-top: 1px solid #e5e5e5;
+        }
+
+        .footer-links {
+            margin-bottom: 15px;
+        }
+
+        .footer-link {
+            color: #666666;
+            text-decoration: none;
+            font-size: 13px;
+            margin: 0 15px;
+            display: inline-block;
+        }
+
+        .footer-link:hover {
+            text-decoration: underline;
+        }
+
+        .copyright {
+            font-size: 12px;
+            color: #999999;
+            margin-top: 10px;
+        }
+
+        @media only screen and (max-width: 600px) {
+            .content {
+                padding: 30px 20px;
+            }
+
+            h1 {
+                font-size: 24px;
+            }
+
+            .footer-link {
+                display: block;
+                margin: 8px 0;
+            }
         }
     </style>
 </head>
 <body>
-    <div class="container">
+    <div class="email-container">
+        <!-- Header with Logo -->
         <div class="header">
-            <h1>Email Verification</h1>
+            <div class="logo">{{ $appName }}</div>
         </div>
+
+        <!-- Main Content -->
         <div class="content">
-            <h2>Hello {{ $user->name }}!</h2>
+            <h1>Email Address Verification</h1>
 
-            <p>Thank you for registering! Please click the button below to verify your email address.</p>
+            <p class="message">
+                Thank you for registering your email address. Please click below to verify it:
+            </p>
 
-            <center>
-                <a href="{{ $verificationUrl }}" class="button">Verify Email Address</a>
-            </center>
+            <a href="{{ $verificationUrl }}" class="verify-button">Verify Email Address</a>
 
-            <p>If you did not create an account, no further action is required.</p>
+            <div class="expiry-notice">
+                ⏰ This link will expire in <strong>{{ $expiryMinutes }} minutes</strong>
+            </div>
 
-            <p>If you're having trouble clicking the button, copy and paste the URL below into your web browser:</p>
+            <p class="alternative-text">
+                If this doesn't work, copy and paste the following link into your browser:
+            </p>
 
-            <p class="link">{{ $verificationUrl }}</p>
+            <a href="{{ $verificationUrl }}" class="url-link">{{ $verificationUrl }}</a>
         </div>
+
+        <!-- Footer -->
         <div class="footer">
-            <p>&copy; {{ date('Y') }} Your Company. All rights reserved.</p>
-            <p>This link will expire in 60 minutes.</p>
+            <div class="footer-links">
+                <a href="#" class="footer-link">Contact Us</a>
+                <a href="#" class="footer-link">Terms & Conditions</a>
+                <a href="#" class="footer-link">Privacy Policy</a>
+            </div>
+            <p class="copyright">
+                © {{ $year }} {{ $appName }}. All rights reserved.
+            </p>
         </div>
     </div>
 </body>

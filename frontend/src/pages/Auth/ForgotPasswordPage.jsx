@@ -1,15 +1,26 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { toast } from 'react-hot-toast';
+import { 
+  AtSymbolIcon,
+  LockClosedIcon,
+  EnvelopeIcon,
+  ExclamationCircleIcon
+} from '@heroicons/react/24/outline';
 import authService from '../../services/auth';
 import { ROUTES } from '../../config/routes';
 import LoadingSpinner from '../../components/common/LoadingSpinner';
+import { title } from '../../services/helpers';
 
 const ForgotPasswordPage = () => {
   const [formData, setFormData] = useState({ email: '' });
   const [errors, setErrors] = useState({});
   const [isLoading, setIsLoading] = useState(false);
   const [emailSent, setEmailSent] = useState(false);
+
+  useEffect(() => {
+    document.title = title('Forgot Password');
+  }, []);
 
   const validateForm = () => {
     const newErrors = {};
@@ -27,7 +38,7 @@ const ForgotPasswordPage = () => {
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData((prev) => ({ ...prev, [name]: value }));
-    
+
     if (errors[name]) {
       setErrors((prev) => ({ ...prev, [name]: '' }));
     }
@@ -35,7 +46,7 @@ const ForgotPasswordPage = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    
+
     if (!validateForm()) {
       return;
     }
@@ -44,14 +55,14 @@ const ForgotPasswordPage = () => {
 
     try {
       const response = await authService.forgotPassword(formData);
-      
+
       if (response.success) {
         setEmailSent(true);
         toast.success('Password reset link sent! Check your email.');
       }
     } catch (error) {
       const apiError = error.response?.data;
-      
+
       if (apiError?.errors) {
         const formattedErrors = {};
         Object.entries(apiError.errors).forEach(([key, messages]) => {
@@ -70,15 +81,13 @@ const ForgotPasswordPage = () => {
 
   if (emailSent) {
     return (
-      <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-orange-50 via-white to-amber-50 dark:from-gray-900 dark:via-gray-900 dark:to-gray-800 px-4 py-8">
+      <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-primary-50 via-white to-primary-50 dark:from-gray-900 dark:via-gray-900 dark:to-gray-800 px-4 py-8">
         <div className="w-full max-w-md">
           <div className="text-center mb-8">
-            <div className="inline-flex items-center justify-center w-16 h-16 bg-orange-100 dark:bg-orange-900/30 rounded-2xl mb-4">
-              <svg className="w-10 h-10 text-orange-600 dark:text-orange-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
-              </svg>
+            <div className="inline-flex items-center justify-center w-16 h-16 bg-primary-100 dark:bg-primary-900/30 rounded-2xl mb-4">
+              <EnvelopeIcon className="w-10 h-10 text-primary-600 dark:text-primary-400" />
             </div>
-            <h1 className="text-2xl font-bold bg-gradient-to-r from-orange-600 to-amber-600 dark:from-orange-400 dark:to-amber-400 bg-clip-text text-transparent mb-2">Check Your Email</h1>
+            <h1 className="text-2xl font-bold bg-gradient-to-r from-primary-600 to-primary-600 dark:from-primary-400 dark:to-primary-400 bg-clip-text text-transparent mb-2">Check Your Email</h1>
             <p className="text-gray-600 dark:text-gray-400 text-sm">We've sent you a password reset link</p>
           </div>
 
@@ -104,7 +113,7 @@ const ForgotPasswordPage = () => {
                 </Link>
 
                 <div className="text-center text-sm">
-                  <Link to={ROUTES.LOGIN} className="text-orange-600 dark:text-orange-400 hover:text-orange-700 dark:hover:text-orange-300 font-medium">
+                  <Link to={ROUTES.LOGIN} className="text-primary-600 dark:text-primary-400 hover:text-primary-700 dark:hover:text-primary-300 font-medium">
                     Back to Login
                   </Link>
                 </div>
@@ -117,15 +126,13 @@ const ForgotPasswordPage = () => {
   }
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-orange-50 via-white to-amber-50 dark:from-gray-900 dark:via-gray-900 dark:to-gray-800 px-4 py-8">
+    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-primary-50 via-white to-primary-50 dark:from-gray-900 dark:via-gray-900 dark:to-gray-800 px-4 py-8">
       <div className="w-full max-w-md">
         <div className="text-center mb-8">
-          <div className="inline-flex items-center justify-center w-16 h-16 bg-orange-100 dark:bg-orange-900/30 rounded-2xl mb-4">
-            <svg className="w-10 h-10 text-orange-600 dark:text-orange-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
-            </svg>
+          <div className="inline-flex items-center justify-center w-16 h-16 bg-primary-100 dark:bg-primary-900/30 rounded-2xl mb-4">
+            <LockClosedIcon className="w-10 h-10 text-primary-600 dark:text-primary-400" />
           </div>
-          <h1 className="text-2xl font-bold bg-gradient-to-r from-orange-600 to-amber-600 dark:from-orange-400 dark:to-amber-400 bg-clip-text text-transparent mb-2">Forgot Password?</h1>
+          <h1 className="text-2xl font-bold bg-gradient-to-r from-primary-600 to-primary-600 dark:from-primary-400 dark:to-primary-400 bg-clip-text text-transparent mb-2">Forgot Password?</h1>
           <p className="text-gray-600 dark:text-gray-400 text-sm">Enter your email to reset your password</p>
         </div>
 
@@ -137,9 +144,7 @@ const ForgotPasswordPage = () => {
               </label>
               <div className="relative">
                 <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                  <svg className="h-5 w-5 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M16 12a4 4 0 10-8 0 4 4 0 008 0zm0 0v1.5a2.5 2.5 0 005 0V12a9 9 0 10-9 9m4.5-1.206a8.959 8.959 0 01-4.5 1.207" />
-                  </svg>
+                  <AtSymbolIcon className="h-5 w-5 text-gray-400" />
                 </div>
                 <input
                   type="email"
@@ -149,16 +154,14 @@ const ForgotPasswordPage = () => {
                   onChange={handleChange}
                   disabled={isLoading}
                   placeholder="you@restaurant.com"
-                  className={`w-full pl-10 pr-4 py-3 border rounded-xl focus:ring-2 focus:ring-orange-500 focus:border-orange-500 focus:outline-none transition-all bg-white dark:bg-gray-700 text-gray-900 dark:text-white placeholder-gray-400 dark:placeholder-gray-500 disabled:opacity-50 disabled:cursor-not-allowed ${
+                  className={`w-full pl-10 pr-4 py-3 border rounded-xl focus:ring-2 focus:ring-primary-500 focus:border-primary-500 focus:outline-none transition-all bg-white dark:bg-gray-700 text-gray-900 dark:text-white placeholder-gray-400 dark:placeholder-gray-500 disabled:opacity-50 disabled:cursor-not-allowed ${
                     errors.email ? 'border-red-500' : 'border-gray-200 dark:border-gray-600'
                   }`}
                 />
               </div>
               {errors.email && (
                 <p className="mt-1.5 text-sm text-red-600 dark:text-red-400 flex items-center gap-1">
-                  <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
-                    <path fillRule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7 4a1 1 0 11-2 0 1 1 0 012 0zm-1-9a1 1 0 00-1 1v4a1 1 0 102 0V6a1 1 0 00-1-1z" clipRule="evenodd" />
-                  </svg>
+                  <ExclamationCircleIcon className="w-4 h-4" />
                   {errors.email}
                 </p>
               )}
@@ -167,7 +170,7 @@ const ForgotPasswordPage = () => {
             <Link
               to="#"
               onClick={handleSubmit}
-              className={`w-full bg-gradient-to-r from-orange-600 to-amber-600 hover:from-orange-700 hover:to-amber-700 dark:from-orange-500 dark:to-amber-500 dark:hover:from-orange-600 dark:hover:to-amber-600 text-white font-medium py-3 px-4 rounded-xl transition-all duration-200 flex items-center justify-center gap-2 shadow-lg shadow-orange-500/30 ${
+              className={`w-full bg-gradient-to-r from-primary-600 to-primary-600 hover:from-primary-700 hover:to-primary-700 dark:from-primary-500 dark:to-primary-500 dark:hover:from-primary-600 dark:hover:to-primary-600 text-white font-medium py-3 px-4 rounded-xl transition-all duration-200 flex items-center justify-center gap-2 shadow-lg shadow-primary-500/30 ${
                 isLoading ? 'opacity-50 cursor-not-allowed pointer-events-none' : ''
               }`}
             >
@@ -175,7 +178,7 @@ const ForgotPasswordPage = () => {
             </Link>
 
             <div className="text-center text-sm pt-2">
-              <Link to={ROUTES.LOGIN} className="text-orange-600 dark:text-orange-400 hover:text-orange-700 dark:hover:text-orange-300 font-medium">
+              <Link to={ROUTES.LOGIN} className="text-primary-600 dark:text-primary-400 hover:text-primary-700 dark:hover:text-primary-300 font-medium">
                 Back to Login
               </Link>
             </div>
