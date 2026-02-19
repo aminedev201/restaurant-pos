@@ -68,6 +68,7 @@ class AuthService {
   clearAuthData() {
     localStorage.removeItem('auth_token');
     localStorage.removeItem('user');
+    localStorage.removeItem('pos_order_items');
   }
 
   isAuthenticated() {

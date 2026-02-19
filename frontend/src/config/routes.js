@@ -9,4 +9,5 @@ export const ROUTES = {
   DASHBOARD: '/dashboard',
   CATEGORIES: '/categories',
   ITEMS: '/items',
+  MENU: '/menu',
 };

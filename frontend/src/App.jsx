@@ -18,6 +18,7 @@ import VerifyEmailPage from "./pages/Auth/VerifyEmailPage";
 import DashboardPage from "./pages/DashboardPage";
 import CategoriesPage from './pages/CategoriesPage';
 import ItemsPage from './pages/ItemsPage';
+import MenuPage from './pages/MenuPage';
 
 
 // Guest Routes Configuration
@@ -34,6 +35,7 @@ const protectedRoutes = [
   { path: ROUTES.DASHBOARD, element: <DashboardPage /> },
   { path: ROUTES.CATEGORIES, element: <CategoriesPage /> },
   { path: ROUTES.ITEMS, element: <ItemsPage /> },
+  { path: ROUTES.MENU, element: <MenuPage /> },
 ];
 
 const App = () => {

@@ -3,6 +3,7 @@
 use App\Http\Controllers\Api\Admin\AuthController;
 use App\Http\Controllers\Api\Admin\CategoryController;
 use App\Http\Controllers\Api\Admin\ItemController;
+use App\Http\Controllers\Api\Admin\OrderController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -43,5 +44,14 @@ Route::middleware(['auth:sanctum', 'verified', 'user.status'])->group(function (
     Route::apiResource('items', ItemController::class);
     // Bulk Delete Items
     Route::post('items/bulk-delete', [ItemController::class, 'bulkDelete']);
+
+    Route::prefix('orders')->controller(OrderController::class)->group(function () {
+        Route::get('/',              'index');
+        Route::post('/',             'store');
+        Route::get('/{id}',          'show');
+        Route::delete('/{id}',       'destroy');
+        Route::patch('/{id}/status', 'updateStatus');
+        Route::patch('/{id}/payment','updatePayment');  
+    });
 
 });

@@ -26,10 +26,9 @@ const Sidebar = ({ isOpen, isMobileOpen, onClose }) => {
       icon: HomeIcon,
     },
     {
-      title: 'Categories',
-      path: '/categories',
-      icon: Squares2X2Icon,
-      badge: '12',
+      title: 'Menu',
+      path: '/menu',
+      icon: UserGroupIcon,
     },
     {
       title: 'Items',
@@ -37,15 +36,16 @@ const Sidebar = ({ isOpen, isMobileOpen, onClose }) => {
       icon: CubeIcon,
     },
     {
-      title: 'Team',
-      path: '/team',
-      icon: UserGroupIcon,
+      title: 'Categories',
+      path: '/categories',
+      icon: Squares2X2Icon,
+      // badge: '12',
     },
     {
       title: 'Messages',
       path: '/messages',
       icon: ChatBubbleLeftRightIcon,
-      badge: '5',
+      // badge: '5',
     },
     {
       title: 'Calendar',

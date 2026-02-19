@@ -282,7 +282,7 @@ const CategoriesPage = () => {
 
   return (
     <DashboardLayout>
-      <div className="p-4 sm:p-6 lg:p-8">
+      <div>
         {/* Header */}
         <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 sm:gap-0 mb-6 sm:mb-8">
           <div>
@@ -309,7 +309,7 @@ const CategoriesPage = () => {
               {selectedCategories.length > 0 && (
                 <button onClick={handleBulkDelete} className="px-3 sm:px-4 py-2 bg-red-600 hover:bg-red-700 text-white rounded-lg transition duration-200 font-medium text-xs sm:text-sm flex items-center gap-1 sm:gap-2">
                   <TrashIcon className="w-3 h-3 sm:w-4 sm:h-4 flex-shrink-0" />
-                  <span>Delete ({selectedCategories.length})</span>
+                  <span>({selectedCategories.length})</span>
                 </button>
               )}
 
