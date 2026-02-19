@@ -22,14 +22,14 @@ class CategoryController extends Controller
             return response()->json([
                 'success' => true,
                 'message' => 'Categories retrieved successfully',
-                'data' =>  $categories
+                'data'    => $categories
             ], 200);
 
         } catch (\Exception $e) {
             return response()->json([
                 'success' => false,
                 'message' => 'Failed to retrieve categories',
-                'error' => $e->getMessage()
+                'error'   => $e->getMessage()
             ], 500);
         }
     }
@@ -37,22 +37,23 @@ class CategoryController extends Controller
     {
         try {
             $category = Category::create([
-                'name' => $request->name,
+                'name'        => $request->name,
                 'description' => $request->description,
-                'user_id' => Auth::user()->id,
+                'icon'        => $request->icon,
+                'user_id'     => Auth::user()->id,
             ]);
 
             return response()->json([
                 'success' => true,
                 'message' => 'Category created successfully',
-                'data' => $category
+                'data'    => $category
             ], 201);
 
         } catch (\Exception $e) {
             return response()->json([
                 'success' => false,
                 'message' => 'Category creation failed',
-                'error' => $e->getMessage()
+                'error'   => $e->getMessage()
             ], 500);
         }
     }
@@ -73,14 +74,14 @@ class CategoryController extends Controller
             return response()->json([
                 'success' => true,
                 'message' => 'Category retrieved successfully',
-                'data' => $category
+                'data'    => $category
             ], 200);
 
         } catch (\Exception $e) {
             return response()->json([
                 'success' => false,
                 'message' => 'Failed to retrieve category',
-                'error' => $e->getMessage()
+                'error'   => $e->getMessage()
             ], 500);
         }
     }
@@ -99,21 +100,22 @@ class CategoryController extends Controller
             }
 
             $category->update([
-                'name' => $request->name,
+                'name'        => $request->name,
                 'description' => $request->description,
+                'icon'        => $request->icon,
             ]);
 
             return response()->json([
                 'success' => true,
                 'message' => 'Category updated successfully',
-                'data' => $category
+                'data'    => $category
             ], 200);
 
         } catch (\Exception $e) {
             return response()->json([
                 'success' => false,
                 'message' => 'Category update failed',
-                'error' => $e->getMessage()
+                'error'   => $e->getMessage()
             ], 500);
         }
     }
@@ -142,68 +144,64 @@ class CategoryController extends Controller
             return response()->json([
                 'success' => false,
                 'message' => 'Category deletion failed',
-                'error' => $e->getMessage()
+                'error'   => $e->getMessage()
             ], 500);
         }
     }
     public function import(Request $request)
     {
         try {
-            // Validate request
             $validator = Validator::make($request->all(), [
-                'categories' => 'required|array',
-                'categories.*.name' => 'required|string|min:2|max:255',
+                'categories'             => 'required|array',
+                'categories.*.name'      => 'required|string|min:2|max:255',
                 'categories.*.description' => 'nullable|string|max:1000',
+                'categories.*.icon'      => 'nullable|string',
             ]);
 
             if ($validator->fails()) {
                 return response()->json([
                     'success' => false,
                     'message' => 'Validation errors',
-                    'errors' => $validator->errors()
+                    'errors'  => $validator->errors()
                 ], 422);
             }
 
-            $categories = $request->categories;
-            $userId = Auth::user()->id;
-            $imported = 0;
+            $categories    = $request->categories;
+            $userId        = Auth::user()->id;
+            $imported      = 0;
             $already_exists = 0;
-            $total = count($categories);
+            $total         = count($categories);
 
-            // Get existing category names for this user
             $existingNames = Category::where('user_id', $userId)
                 ->pluck('name')
-                ->map(function($name) {
-                    return strtolower($name);
-                })
+                ->map(fn($name) => strtolower($name))
                 ->toArray();
 
-            // Prepare categories for batch insert
             $categoriesToInsert = [];
             $now = now();
 
+            // Default icon used when importing without one
+            $defaultIcon = '<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M3.75 6A2.25 2.25 0 016 3.75h2.25A2.25 2.25 0 0110.5 6v2.25a2.25 2.25 0 01-2.25 2.25H6a2.25 2.25 0 01-2.25-2.25V6zM3.75 15.75A2.25 2.25 0 016 13.5h2.25a2.25 2.25 0 012.25 2.25V18a2.25 2.25 0 01-2.25 2.25H6A2.25 2.25 0 013.75 18v-2.25zM13.5 6a2.25 2.25 0 012.25-2.25H18A2.25 2.25 0 0120.25 6v2.25A2.25 2.25 0 0118 10.5h-2.25a2.25 2.25 0 01-2.25-2.25V6zM13.5 15.75a2.25 2.25 0 012.25-2.25H18a2.25 2.25 0 012.25 2.25V18A2.25 2.25 0 0118 20.25h-2.25A2.25 2.25 0 0113.5 18v-2.25z" /></svg>';
+
             foreach ($categories as $category) {
-                // Skip if name already exists (case-insensitive)
                 if (in_array(strtolower($category['name']), $existingNames)) {
                     $already_exists++;
                     continue;
                 }
 
-                // Add to insert array
                 $categoriesToInsert[] = [
-                    'name' => $category['name'],
+                    'name'        => $category['name'],
                     'description' => $category['description'] ?? null,
-                    'user_id' => $userId,
-                    'created_at' => $now,
-                    'updated_at' => $now,
+                    'icon'        => $category['icon'] ?? $defaultIcon,
+                    'user_id'     => $userId,
+                    'created_at'  => $now,
+                    'updated_at'  => $now,
                 ];
 
-                // Add to existing names to prevent duplicates in same batch
                 $existingNames[] = strtolower($category['name']);
                 $imported++;
             }
 
-            // Batch insert all categories at once
             if (!empty($categoriesToInsert)) {
                 DB::table('categories')->insert($categoriesToInsert);
             }
@@ -211,9 +209,9 @@ class CategoryController extends Controller
             return response()->json([
                 'success' => true,
                 'message' => 'Categories import completed',
-                'data' => [
-                    'total' => $total,
-                    'imported' => $imported,
+                'data'    => [
+                    'total'         => $total,
+                    'imported'      => $imported,
                     'already_exists' => $already_exists,
                 ]
             ], 200);
@@ -222,16 +220,15 @@ class CategoryController extends Controller
             return response()->json([
                 'success' => false,
                 'message' => 'Import failed',
-                'error' => $e->getMessage()
+                'error'   => $e->getMessage()
             ], 500);
         }
     }
     public function bulkDelete(Request $request)
     {
         try {
-            // Validate request
             $validator = Validator::make($request->all(), [
-                'ids' => 'required|array|min:1',
+                'ids'   => 'required|array|min:1',
                 'ids.*' => 'required|integer',
             ]);
 
@@ -239,20 +236,18 @@ class CategoryController extends Controller
                 return response()->json([
                     'success' => false,
                     'message' => 'Validation errors',
-                    'errors' => $validator->errors()
+                    'errors'  => $validator->errors()
                 ], 422);
             }
 
-            $userId = Auth::user()->id;
+            $userId       = Auth::user()->id;
             $requestedIds = $request->ids;
 
-            // Get all category IDs that belong to the current user
             $userCategoryIds = Category::where('user_id', $userId)
                 ->pluck('id')
                 ->toArray();
 
-            // Filter: Only keep IDs that exist AND belong to the current user
-            $validIds = [];
+            $validIds   = [];
             $skippedIds = [];
 
             foreach ($requestedIds as $id) {
@@ -263,35 +258,30 @@ class CategoryController extends Controller
                 }
             }
 
-            // Check if there are any valid IDs to delete
             if (empty($validIds)) {
                 return response()->json([
                     'success' => false,
                     'message' => 'No valid categories to delete. All IDs are either invalid or do not belong to you.',
-                    'data' => [
-                        'skipped' => count($skippedIds),
-                        'deleted' => 0
-                    ]
+                    'data'    => ['skipped' => count($skippedIds), 'deleted' => 0]
                 ], 403);
             }
 
-            // Delete only the valid categories
             $deleted = Category::where('user_id', $userId)
                 ->whereIn('id', $validIds)
                 ->delete();
 
             $message = 'Categories deleted successfully';
             if (count($skippedIds) > 0) {
-                $message = "Deleted {$deleted} categories. Skipped {count($skippedIds)} unauthorized or invalid categories.";
+                $message = "Deleted {$deleted} categories. Skipped " . count($skippedIds) . " unauthorized or invalid categories.";
             }
 
             return response()->json([
                 'success' => true,
                 'message' => $message,
-                'data' => [
-                    'deleted' => $deleted,
-                    'skipped' => count($skippedIds),
-                    'valid_ids' => $validIds,
+                'data'    => [
+                    'deleted'     => $deleted,
+                    'skipped'     => count($skippedIds),
+                    'valid_ids'   => $validIds,
                     'skipped_ids' => $skippedIds
                 ]
             ], 200);
@@ -300,9 +290,8 @@ class CategoryController extends Controller
             return response()->json([
                 'success' => false,
                 'message' => 'Failed to delete categories',
-                'error' => $e->getMessage()
+                'error'   => $e->getMessage()
             ], 500);
         }
     }
-
 }

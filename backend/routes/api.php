@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Api\Admin\AuthController;
 use App\Http\Controllers\Api\Admin\CategoryController;
+use App\Http\Controllers\Api\Admin\ItemController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -34,9 +35,13 @@ Route::middleware(['auth:sanctum', 'verified', 'user.status'])->group(function (
 
     // Categories
     Route::apiResource('categories', CategoryController::class);
-
-    // Import and Bulk Delete
+    // Import and Bulk Delete Categories
     Route::post('categories/import', [CategoryController::class, 'import']);
     Route::post('categories/bulk-delete', [CategoryController::class, 'bulkDelete']);
+
+    // Items
+    Route::apiResource('items', ItemController::class);
+    // Bulk Delete Items
+    Route::post('items/bulk-delete', [ItemController::class, 'bulkDelete']);
 
 });

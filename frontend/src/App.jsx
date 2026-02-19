@@ -17,6 +17,7 @@ import VerifyEmailPage from "./pages/Auth/VerifyEmailPage";
 // -------------- For User --------------
 import DashboardPage from "./pages/DashboardPage";
 import CategoriesPage from './pages/CategoriesPage';
+import ItemsPage from './pages/ItemsPage';
 
 
 // Guest Routes Configuration
@@ -32,6 +33,7 @@ const guestRoutes = [
 const protectedRoutes = [
   { path: ROUTES.DASHBOARD, element: <DashboardPage /> },
   { path: ROUTES.CATEGORIES, element: <CategoriesPage /> },
+  { path: ROUTES.ITEMS, element: <ItemsPage /> },
 ];
 
 const App = () => {

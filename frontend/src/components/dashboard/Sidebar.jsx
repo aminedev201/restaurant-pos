@@ -2,14 +2,15 @@ import { Link, useLocation } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import { 
   HomeIcon,
-  FolderIcon,
+  CubeIcon,
   UserGroupIcon,
   ChatBubbleLeftRightIcon,
   CalendarIcon,
   CogIcon,
   QuestionMarkCircleIcon,
   XMarkIcon,
-  BoltIcon
+  BoltIcon,
+  Squares2X2Icon,
 } from '@heroicons/react/24/outline';
 import { ROUTES } from '../../config/routes';
 import { getAppName } from '../../services/helpers';
@@ -27,28 +28,13 @@ const Sidebar = ({ isOpen, isMobileOpen, onClose }) => {
     {
       title: 'Categories',
       path: '/categories',
-      icon: () => (
-        <svg
-          xmlns="http://www.w3.org/2000/svg"
-          fill="none"
-          viewBox="0 0 24 24"
-          stroke="currentColor"
-          className="w-5 h-5"
-        >
-          <path
-            strokeLinecap="round"
-            strokeLinejoin="round"
-            strokeWidth={2}
-            d="M4 4h6v6H4V4zm0 10h6v6H4v-6zm10-10h6v6h-6V4zm0 10h6v6h-6v-6z"
-          />
-        </svg>
-      ),
+      icon: Squares2X2Icon,
       badge: '12',
     },
     {
-      title: 'Projects',
-      path: '/projects',
-      icon: FolderIcon,
+      title: 'Items',
+      path: '/Items',
+      icon: CubeIcon,
     },
     {
       title: 'Team',
@@ -83,13 +69,6 @@ const Sidebar = ({ isOpen, isMobileOpen, onClose }) => {
 
   const isActive = (path) => location.pathname === path;
 
-  const renderIcon = (IconComponent) => {
-    if (typeof IconComponent === 'function' && IconComponent.prototype === undefined) {
-      return <IconComponent />;
-    }
-    return <IconComponent className="w-5 h-5 flex-shrink-0" />;
-  };
-
   return (
     <>
       {/* Overlay for mobile */}
@@ -117,7 +96,7 @@ const Sidebar = ({ isOpen, isMobileOpen, onClose }) => {
           <div className={`flex items-center ${isOpen ? 'justify-between p-6' : 'justify-center p-4 lg:p-6'} border-b border-gray-200 dark:border-gray-700 h-16`}>
             <div className={`flex items-center space-x-3 ${!isOpen && 'lg:space-x-0'}`}>
               <div className="w-8 h-8 bg-gradient-to-br from-primary-500 to-primary-600 rounded-lg flex items-center justify-center flex-shrink-0">
-                  <img src={Logo} alt="Rest POS Logo"/>
+                <img src={Logo} alt="Rest POS Logo" />
               </div>
               {(isOpen || isMobileOpen) && (
                 <span className="text-lg font-bold text-gray-900 dark:text-white whitespace-nowrap">
@@ -153,12 +132,12 @@ const Sidebar = ({ isOpen, isMobileOpen, onClose }) => {
                   `}
                   title={!isOpen ? item.title : undefined}
                 >
-                  {renderIcon(item.icon)}
-                  
+                  <item.icon className="w-5 h-5 flex-shrink-0" />
+
                   {(isOpen || isMobileOpen) && (
                     <>
                       <span className="font-medium flex-1">{item.title}</span>
-                      
+
                       {item.badge && (
                         <span className="px-2 py-0.5 text-xs font-semibold bg-primary-100 dark:bg-primary-900/40 text-primary-600 dark:text-primary-400 rounded-full">
                           {item.badge}
@@ -206,8 +185,8 @@ const Sidebar = ({ isOpen, isMobileOpen, onClose }) => {
                   `}
                   title={!isOpen ? item.title : undefined}
                 >
-                  {renderIcon(item.icon)}
-                  
+                  <item.icon className="w-5 h-5 flex-shrink-0" />
+
                   {(isOpen || isMobileOpen) && (
                     <span className="font-medium">{item.title}</span>
                   )}

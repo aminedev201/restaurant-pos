@@ -8,4 +8,5 @@ export const ROUTES = {
   VERIFY_EMAIL: '/verify-email',
   DASHBOARD: '/dashboard',
   CATEGORIES: '/categories',
+  ITEMS: '/items',
 };

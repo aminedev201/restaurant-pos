@@ -11,6 +11,12 @@ import {
 } from '@heroicons/react/24/outline';
 import LoadingSpinner from '../common/LoadingSpinner';
 
+// Renders an SVG string safely
+const SvgPreview = ({ svg, className = 'w-5 h-5' }) => {
+  if (!svg) return null;
+  return <span className={className} dangerouslySetInnerHTML={{ __html: svg }} />;
+};
+
 const ImportModal = ({ onClose, onSuccess }) => {
   const [file, setFile] = useState(null);
   const [loading, setLoading] = useState(false);
@@ -40,16 +46,12 @@ const ImportModal = ({ onClose, onSuccess }) => {
 
   const parseFile = async (file) => {
     const fileExtension = file.name.split('.').pop().toLowerCase();
-    try {
-      if (fileExtension === 'json') {
-        return await parseJSON(file);
-      } else if (fileExtension === 'xlsx' || fileExtension === 'xls') {
-        return await parseExcel(file);
-      } else {
-        throw new Error('Unsupported file type. Please upload JSON or Excel file.');
-      }
-    } catch (error) {
-      throw error;
+    if (fileExtension === 'json') {
+      return await parseJSON(file);
+    } else if (fileExtension === 'xlsx' || fileExtension === 'xls') {
+      return await parseExcel(file);
+    } else {
+      throw new Error('Unsupported file type. Please upload JSON or Excel file.');
     }
   };
 
@@ -64,8 +66,9 @@ const ImportModal = ({ onClose, onSuccess }) => {
             return;
           }
           const categories = json.map(item => ({
-            name: item.name || item.Name || '',
-            description: item.description || item.Description || item.desc || ''
+            name:        item.name        || item.Name        || '',
+            description: item.description || item.Description || item.desc || '',
+            icon:        item.icon        || item.Icon        || '',
           }));
           resolve(categories);
         } catch (error) {
@@ -91,8 +94,9 @@ const ImportModal = ({ onClose, onSuccess }) => {
             return;
           }
           const categories = jsonData.map(item => ({
-            name: item.name || item.Name || item.NAME || '',
-            description: item.description || item.Description || item.DESCRIPTION || item.desc || ''
+            name:        item.name        || item.Name        || item.NAME        || '',
+            description: item.description || item.Description || item.DESCRIPTION || item.desc || '',
+            icon:        item.icon        || item.Icon        || item.ICON        || '',
           }));
           resolve(categories);
         } catch (error) {
@@ -149,9 +153,9 @@ const ImportModal = ({ onClose, onSuccess }) => {
       }
 
       setValidationSummary({
-        total: categories.length,
-        valid: categories.length - allErrors.length,
-        invalid: allErrors.length
+        total:   categories.length,
+        valid:   categories.length - allErrors.length,
+        invalid: allErrors.length,
       });
     } catch (error) {
       toast.dismiss(loadingToast);
@@ -164,11 +168,8 @@ const ImportModal = ({ onClose, onSuccess }) => {
   const handleDrag = (e) => {
     e.preventDefault();
     e.stopPropagation();
-    if (e.type === 'dragenter' || e.type === 'dragover') {
-      setDragActive(true);
-    } else if (e.type === 'dragleave') {
-      setDragActive(false);
-    }
+    if (e.type === 'dragenter' || e.type === 'dragover') setDragActive(true);
+    else if (e.type === 'dragleave') setDragActive(false);
   };
 
   const handleDrop = (e) => {
@@ -237,12 +238,10 @@ const ImportModal = ({ onClose, onSuccess }) => {
   return (
     <div className="fixed inset-0 z-50 overflow-y-auto">
       <div className="flex items-center justify-center min-h-screen px-4 pt-4 pb-20 text-center sm:block sm:p-0">
-        {/* Background overlay */}
         <div
           className="fixed inset-0 transition-opacity bg-gray-500 bg-opacity-75 dark:bg-gray-900 dark:bg-opacity-75"
           onClick={onClose}
         />
-
         <span className="hidden sm:inline-block sm:align-middle sm:h-screen">&#8203;</span>
 
         <div className="inline-block align-bottom bg-white dark:bg-gray-800 rounded-lg text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-3xl sm:w-full">
@@ -270,6 +269,7 @@ const ImportModal = ({ onClose, onSuccess }) => {
               <ul className="text-sm text-blue-800 dark:text-blue-300 space-y-1">
                 <li>• Required field: <span className="font-semibold">name</span> (min 2, max 255 characters)</li>
                 <li>• Optional field: <span className="font-semibold">description</span> (max 1000 characters)</li>
+                <li>• Optional field: <span className="font-semibold">icon</span> (SVG markup string; a default icon is used if omitted)</li>
                 <li>• Maximum file size: 5MB</li>
                 <li>• Duplicate names will be skipped</li>
               </ul>
@@ -284,7 +284,6 @@ const ImportModal = ({ onClose, onSuccess }) => {
                 onChange={(e) => handleFileChange(e.target.files[0])}
                 className="hidden"
               />
-
               <div
                 onDragEnter={handleDrag}
                 onDragLeave={handleDrag}
@@ -360,6 +359,7 @@ const ImportModal = ({ onClose, onSuccess }) => {
                       <thead className="bg-gray-50 dark:bg-gray-700">
                         <tr>
                           <th className="px-4 py-2 text-left text-xs font-semibold text-gray-700 dark:text-gray-300">#</th>
+                          <th className="px-4 py-2 text-left text-xs font-semibold text-gray-700 dark:text-gray-300">Icon</th>
                           <th className="px-4 py-2 text-left text-xs font-semibold text-gray-700 dark:text-gray-300">Name</th>
                           <th className="px-4 py-2 text-left text-xs font-semibold text-gray-700 dark:text-gray-300">Description</th>
                         </tr>
@@ -368,6 +368,15 @@ const ImportModal = ({ onClose, onSuccess }) => {
                         {previewData.map((item, index) => (
                           <tr key={index} className="hover:bg-gray-50 dark:hover:bg-gray-700">
                             <td className="px-4 py-2 text-gray-600 dark:text-gray-400">{index + 1}</td>
+                            <td className="px-4 py-2">
+                              {item.icon ? (
+                                <div className="w-8 h-8 flex items-center justify-center rounded-lg bg-primary-50 dark:bg-primary-900/20 text-primary-600 dark:text-primary-400">
+                                  <SvgPreview svg={item.icon} className="w-5 h-5 [&>svg]:w-full [&>svg]:h-full" />
+                                </div>
+                              ) : (
+                                <span className="text-xs text-gray-400 dark:text-gray-500 italic">default</span>
+                              )}
+                            </td>
                             <td className="px-4 py-2 text-gray-900 dark:text-white font-medium">{item.name || 'N/A'}</td>
                             <td className="px-4 py-2 text-gray-600 dark:text-gray-400 truncate max-w-xs">{item.description || 'N/A'}</td>
                           </tr>
@@ -424,7 +433,7 @@ const ImportModal = ({ onClose, onSuccess }) => {
             >
               {loading ? (
                 <>
-                 <LoadingSpinner size="sm" />
+                  <LoadingSpinner size="sm" />
                   Importing...
                 </>
               ) : (

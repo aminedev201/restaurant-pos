@@ -8,7 +8,7 @@ use Illuminate\Validation\Rule;
 use Illuminate\Contracts\Validation\Validator;
 use Illuminate\Http\Exceptions\HttpResponseException;
 
-class CategoryRequest extends FormRequest
+class ItemRequest extends FormRequest
 {
     public function authorize(): bool
     {
@@ -17,20 +17,22 @@ class CategoryRequest extends FormRequest
 
     public function rules(): array
     {
-        $categoryId = $this->route('category');
+        $itemId = $this->route('item');
 
         return [
-            'name' => [
+            'title' => [
                 'required',
                 'string',
                 'min:2',
                 'max:255',
-                Rule::unique('categories', 'name')
-                    ->where('user_id', Auth::user()->id)
-                    ->ignore($categoryId)
+                Rule::unique('items', 'title')
+                    ->where('user_id', Auth::id())
+                    ->ignore($itemId)
             ],
             'description' => 'nullable|string|max:1000',
-            'icon'        => 'required|string',
+            'price'       => 'required|numeric|min:0|decimal:0,2',
+            'image' => ($this->isMethod('POST') ? 'required' : 'nullable') . '|file|image|mimes:jpg,jpeg,png,gif,webp|max:10240',
+            'category_id' => 'required|integer|exists:categories,id',
         ];
     }
 
