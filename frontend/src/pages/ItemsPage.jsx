@@ -58,7 +58,7 @@ const CategoryFilterSelect = ({ categories, value, onChange }) => {
       <button
         type="button"
         onClick={() => setOpen(prev => !prev)}
-        className="w-full pl-9 pr-4 py-2 sm:py-2.5 text-sm border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-primary-500 focus:outline-none bg-white dark:bg-gray-700 text-left flex items-center gap-2 cursor-pointer hover:border-primary-400 transition-colors"
+        className="w-full pl-9 pr-4 py-2 sm:py-2.5 text-sm border border-gray-300 dark:border-gray-600 rounded-lg  focus:outline-none bg-white dark:bg-gray-700 text-left flex items-center gap-2 cursor-pointer hover:border-primary-400 transition-colors"
       >
         <FunnelIcon className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400 pointer-events-none" />
         {selected ? (
@@ -82,11 +82,10 @@ const CategoryFilterSelect = ({ categories, value, onChange }) => {
           <button
             type="button"
             onClick={() => handleSelect(null)}
-            className={`w-full flex items-center gap-3 px-4 py-2.5 text-left text-sm transition-colors hover:bg-primary-50 dark:hover:bg-primary-900/20 ${
-              !value
+            className={`w-full flex items-center gap-3 px-4 py-2.5 text-left text-sm transition-colors hover:bg-primary-50 dark:hover:bg-primary-900/20 ${!value
                 ? 'bg-primary-50 dark:bg-primary-900/20 text-primary-700 dark:text-primary-300 font-medium'
                 : 'text-gray-700 dark:text-gray-300'
-            }`}
+              }`}
           >
             <span className="flex-shrink-0 w-7 h-7 flex items-center justify-center rounded-md bg-gray-100 dark:bg-gray-700 text-gray-400">
               <FunnelIcon className="w-4 h-4" />
@@ -100,11 +99,10 @@ const CategoryFilterSelect = ({ categories, value, onChange }) => {
               key={cat.id}
               type="button"
               onClick={() => handleSelect(cat)}
-              className={`w-full flex items-center gap-3 px-4 py-2.5 text-left text-sm transition-colors hover:bg-primary-50 dark:hover:bg-primary-900/20 ${
-                String(cat.id) === String(value)
+              className={`w-full flex items-center gap-3 px-4 py-2.5 text-left text-sm transition-colors hover:bg-primary-50 dark:hover:bg-primary-900/20 ${String(cat.id) === String(value)
                   ? 'bg-primary-50 dark:bg-primary-900/20 text-primary-700 dark:text-primary-300 font-medium'
                   : 'text-gray-800 dark:text-gray-200'
-              }`}
+                }`}
             >
               <span className="flex-shrink-0 w-7 h-7 flex items-center justify-center rounded-md bg-primary-50 dark:bg-primary-900/30 text-primary-600 dark:text-primary-400">
                 <SvgPreview svg={cat.icon} className="w-4 h-4 [&>svg]:w-full [&>svg]:h-full" />
@@ -116,8 +114,10 @@ const CategoryFilterSelect = ({ categories, value, onChange }) => {
               )}
             </button>
           ))}
+
         </div>
       )}
+
     </div>
   );
 };
@@ -224,10 +224,10 @@ const ItemsPage = () => {
     );
   };
 
-  const handleCreate     = () => { setModalMode('create'); setSelectedItem(null); setShowModal(true); };
-  const handleEdit       = (item) => { setModalMode('edit'); setSelectedItem(item); setShowModal(true); };
-  const handleView       = (item) => { setSelectedItem(item); setShowViewModal(true); };
-  const handleDelete     = (item) => { setSelectedItem(item); setDeleteType('single'); setShowDeleteModal(true); };
+  const handleCreate = () => { setModalMode('create'); setSelectedItem(null); setShowModal(true); };
+  const handleEdit = (item) => { setModalMode('edit'); setSelectedItem(item); setShowModal(true); };
+  const handleView = (item) => { setSelectedItem(item); setShowViewModal(true); };
+  const handleDelete = (item) => { setSelectedItem(item); setDeleteType('single'); setShowDeleteModal(true); };
   const handleBulkDelete = () => {
     if (selectedItems.length === 0) { alert('Please select items to delete'); return; }
     setDeleteType('bulk');
@@ -237,10 +237,10 @@ const ItemsPage = () => {
   const handleExportExcel = () => {
     if (filteredItems.length === 0) { alert('No data to export'); return; }
     const exportData = filteredItems.map(item => ({
-      Title:        item.title,
-      Description:  item.description || '',
-      Price:        item.price,
-      Category:     item.category?.name || '',
+      Title: item.title,
+      Description: item.description || '',
+      Price: item.price,
+      Category: item.category?.name || '',
       'Created At': new Date(item.created_at).toLocaleDateString(),
       'Updated At': new Date(item.updated_at).toLocaleDateString(),
     }));
@@ -259,8 +259,8 @@ const ItemsPage = () => {
         <td style="padding:8px 12px;border-bottom:1px solid #e5e7eb;">
           <div style="display:flex;align-items:center;gap:8px;">
             ${item.category?.icon
-              ? `<span style="width:24px;height:24px;display:flex;align-items:center;justify-content:center;background:#eff6ff;border-radius:6px;color:#2563eb;">${item.category.icon}</span>`
-              : ''}
+        ? `<span style="width:24px;height:24px;display:flex;align-items:center;justify-content:center;background:#eff6ff;border-radius:6px;color:#2563eb;">${item.category.icon}</span>`
+        : ''}
             <span style="text-transform:capitalize;">${item.category?.name || '-'}</span>
           </div>
         </td>
@@ -361,11 +361,11 @@ const ItemsPage = () => {
   };
 
   // Pagination
-  const indexOfLastItem  = currentPage * itemsPerPage;
+  const indexOfLastItem = currentPage * itemsPerPage;
   const indexOfFirstItem = indexOfLastItem - itemsPerPage;
-  const currentItems     = filteredItems.slice(indexOfFirstItem, indexOfLastItem);
-  const totalPages       = Math.ceil(filteredItems.length / itemsPerPage);
-  const paginate         = (n) => setCurrentPage(n);
+  const currentItems = filteredItems.slice(indexOfFirstItem, indexOfLastItem);
+  const totalPages = Math.ceil(filteredItems.length / itemsPerPage);
+  const paginate = (n) => setCurrentPage(n);
 
   const handleItemsPerPageChange = (e) => {
     setItemsPerPage(Number(e.target.value));
@@ -420,7 +420,7 @@ const ItemsPage = () => {
                   placeholder="Search items by title..."
                   value={searchTerm}
                   onChange={(e) => setSearchTerm(e.target.value)}
-                  className="w-full pl-9 sm:pl-10 pr-4 py-2 sm:py-2.5 text-sm border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent bg-white dark:bg-gray-700 text-gray-900 dark:text-white placeholder-gray-400 dark:placeholder-gray-500 focus:outline-none"
+                  className="w-full pl-9 sm:pl-10 pr-4 py-2 sm:py-2.5 text-sm border border-gray-300 dark:border-gray-600 rounded-lg  focus:border-transparent bg-white dark:bg-gray-700 text-gray-900 dark:text-white placeholder-gray-400 dark:placeholder-gray-500 focus:outline-none"
                 />
               </div>
 
@@ -453,7 +453,7 @@ const ItemsPage = () => {
                     </button>
                     <div className="absolute left-0 mt-2 w-40 bg-white dark:bg-gray-800 rounded-lg shadow-lg border border-gray-200 dark:border-gray-700 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 z-10">
                       <button onClick={handleExportExcel} className="w-full px-4 py-2 text-left text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 rounded-t-lg">Excel</button>
-                      <button onClick={handleExportWord}  className="w-full px-4 py-2 text-left text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 rounded-b-lg">Word</button>
+                      <button onClick={handleExportWord} className="w-full px-4 py-2 text-left text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 rounded-b-lg">Word</button>
                     </div>
                   </div>
 
@@ -611,7 +611,7 @@ const ItemsPage = () => {
                     <select
                       value={itemsPerPage}
                       onChange={handleItemsPerPageChange}
-                      className="bg-white dark:bg-gray-800 border border-gray-300 dark:border-gray-600 rounded-lg px-3 py-2 text-sm text-gray-900 dark:text-white focus:ring-2 focus:ring-primary-500 focus:border-primary-500 transition-colors"
+                      className="bg-white dark:bg-gray-800 border border-gray-300 dark:border-gray-600 rounded-lg px-3 py-2 text-sm text-gray-900 dark:text-white  focus:border-primary-500 transition-colors"
                     >
                       {[5, 10, 25, 50, 100].map(n => <option key={n} value={n}>{n}</option>)}
                     </select>
@@ -637,11 +637,10 @@ const ItemsPage = () => {
                           <button
                             key={number}
                             onClick={() => paginate(number)}
-                            className={`px-3 sm:px-4 py-2 rounded-lg font-medium transition-colors text-sm ${
-                              currentPage === number
+                            className={`px-3 sm:px-4 py-2 rounded-lg font-medium transition-colors text-sm ${currentPage === number
                                 ? 'bg-primary-600 text-white'
                                 : 'bg-white dark:bg-gray-800 border border-gray-300 dark:border-gray-600 text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-700'
-                            }`}
+                              }`}
                           >
                             {number}
                           </button>

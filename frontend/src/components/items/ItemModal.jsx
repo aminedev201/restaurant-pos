@@ -38,11 +38,10 @@ const CategorySelect = ({ categories, value, onChange, disabled, error }) => {
         type="button"
         disabled={disabled}
         onClick={() => setOpen(prev => !prev)}
-        className={`w-full px-4 py-3 border rounded-lg flex items-center justify-between gap-2 bg-white dark:bg-gray-700 text-left transition-colors focus:outline-none focus:ring-2 focus:ring-primary-500 ${
-          error
+        className={`w-full px-4 py-3 border rounded-lg flex items-center justify-between gap-2 bg-white dark:bg-gray-700 text-left transition-colors focus:outline-none  ${error
             ? 'border-red-500 dark:border-red-500'
             : 'border-gray-300 dark:border-gray-600'
-        } ${disabled ? 'opacity-50 cursor-not-allowed' : 'cursor-pointer hover:border-primary-400'}`}
+          } ${disabled ? 'opacity-50 cursor-not-allowed' : 'cursor-pointer hover:border-primary-400'}`}
       >
         {selected ? (
           <span className="flex items-center gap-2 min-w-0">
@@ -70,11 +69,10 @@ const CategorySelect = ({ categories, value, onChange, disabled, error }) => {
                 key={cat.id}
                 type="button"
                 onClick={() => handleSelect(cat)}
-                className={`w-full flex items-center gap-3 px-4 py-2.5 text-left text-sm hover:bg-primary-50 dark:hover:bg-primary-900/20 transition-colors ${
-                  String(cat.id) === String(value)
+                className={`w-full flex items-center gap-3 px-4 py-2.5 text-left text-sm hover:bg-primary-50 dark:hover:bg-primary-900/20 transition-colors ${String(cat.id) === String(value)
                     ? 'bg-primary-50 dark:bg-primary-900/20 text-primary-700 dark:text-primary-300 font-medium'
                     : 'text-gray-800 dark:text-gray-200'
-                }`}
+                  }`}
               >
                 <span className="flex-shrink-0 w-7 h-7 flex items-center justify-center rounded-md bg-primary-50 dark:bg-primary-900/30 text-primary-600 dark:text-primary-400">
                   <SvgPreview svg={cat.icon} className="w-4 h-4 [&>svg]:w-full [&>svg]:h-full" />
@@ -110,9 +108,9 @@ const ItemModal = ({ mode, item, categories = [], onClose, onSuccess }) => {
   useEffect(() => {
     if (item && mode === 'edit') {
       setFormData({
-        title:       item.title       || '',
+        title: item.title || '',
         description: item.description || '',
-        price:       item.price       || '',
+        price: item.price || '',
         category_id: item.category_id || '',
       });
       if (item.image_path_url) setImagePreview(item.image_path_url);
@@ -205,9 +203,9 @@ const ItemModal = ({ mode, item, categories = [], onClose, onSuccess }) => {
 
     try {
       const payload = new FormData();
-      payload.append('title',       formData.title);
+      payload.append('title', formData.title);
       payload.append('description', formData.description);
-      payload.append('price',       formData.price);
+      payload.append('price', formData.price);
       payload.append('category_id', formData.category_id);
       if (imageFile) payload.append('image', imageFile);
       if (mode === 'edit') payload.append('_method', 'PUT');
@@ -283,9 +281,8 @@ const ItemModal = ({ mode, item, categories = [], onClose, onSuccess }) => {
                   onChange={handleChange}
                   placeholder="Enter item title"
                   disabled={loading}
-                  className={`w-full px-4 py-3 border rounded-lg focus:ring-2 focus:outline-none focus:ring-primary-500 focus:border-transparent bg-white dark:bg-gray-700 text-gray-900 dark:text-white placeholder-gray-400 dark:placeholder-gray-500 ${
-                    errors.title ? 'border-red-500 dark:border-red-500' : 'border-gray-300 dark:border-gray-600'
-                  }`}
+                  className={`w-full px-4 py-3 border rounded-lg focus:ring-2 focus:outline-none focus:ring-primary-500 focus:border-transparent bg-white dark:bg-gray-700 text-gray-900 dark:text-white placeholder-gray-400 dark:placeholder-gray-500 ${errors.title ? 'border-red-500 dark:border-red-500' : 'border-gray-300 dark:border-gray-600'
+                    }`}
                 />
                 {errors.title && (
                   <p className="mt-2 text-sm text-red-600 dark:text-red-400 flex items-center gap-1">
@@ -330,9 +327,8 @@ const ItemModal = ({ mode, item, categories = [], onClose, onSuccess }) => {
                     max="99999999.99"
                     step="0.01"
                     disabled={loading}
-                    className={`w-full px-4 py-3 border rounded-lg focus:ring-2 focus:outline-none focus:ring-primary-500 focus:border-transparent bg-white dark:bg-gray-700 text-gray-900 dark:text-white placeholder-gray-400 dark:placeholder-gray-500 ${
-                      errors.price ? 'border-red-500 dark:border-red-500' : 'border-gray-300 dark:border-gray-600'
-                    }`}
+                    className={`w-full px-4 py-3 border rounded-lg focus:ring-2 focus:outline-none focus:ring-primary-500 focus:border-transparent bg-white dark:bg-gray-700 text-gray-900 dark:text-white placeholder-gray-400 dark:placeholder-gray-500 ${errors.price ? 'border-red-500 dark:border-red-500' : 'border-gray-300 dark:border-gray-600'
+                      }`}
                   />
                   {errors.price && (
                     <p className="mt-2 text-sm text-red-600 dark:text-red-400 flex items-center gap-1">
@@ -355,9 +351,8 @@ const ItemModal = ({ mode, item, categories = [], onClose, onSuccess }) => {
                   rows="3"
                   maxLength={maxDescLength}
                   disabled={loading}
-                  className={`focus:outline-none w-full px-4 py-3 border rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent bg-white dark:bg-gray-700 text-gray-900 dark:text-white placeholder-gray-400 dark:placeholder-gray-500 resize-none max-h-[150px] overflow-y-auto ${
-                    errors.description ? 'border-red-500 dark:border-red-500' : 'border-gray-300 dark:border-gray-600'
-                  }`}
+                  className={`focus:outline-none w-full px-4 py-3 border rounded-lg  focus:border-transparent bg-white dark:bg-gray-700 text-gray-900 dark:text-white placeholder-gray-400 dark:placeholder-gray-500 resize-none max-h-[150px] overflow-y-auto ${errors.description ? 'border-red-500 dark:border-red-500' : 'border-gray-300 dark:border-gray-600'
+                    }`}
                 />
                 <div className="flex items-center justify-between mt-2">
                   {errors.description ? (
@@ -412,11 +407,10 @@ const ItemModal = ({ mode, item, categories = [], onClose, onSuccess }) => {
                     type="button"
                     onClick={() => fileInputRef.current?.click()}
                     disabled={loading}
-                    className={`w-full border-2 border-dashed rounded-lg p-8 flex flex-col items-center gap-3 transition-colors cursor-pointer ${
-                      errors.image
+                    className={`w-full border-2 border-dashed rounded-lg p-8 flex flex-col items-center gap-3 transition-colors cursor-pointer ${errors.image
                         ? 'border-red-400 bg-red-50 dark:bg-red-900/10'
                         : 'border-gray-300 dark:border-gray-600 hover:border-primary-400 dark:hover:border-primary-500 bg-gray-50 dark:bg-gray-700 hover:bg-primary-50 dark:hover:bg-primary-900/10'
-                    }`}
+                      }`}
                   >
                     <PhotoIcon className={`w-10 h-10 ${errors.image ? 'text-red-400' : 'text-gray-400'}`} />
                     <div className="text-center">

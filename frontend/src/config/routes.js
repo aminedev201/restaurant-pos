@@ -10,4 +10,5 @@ export const ROUTES = {
   CATEGORIES: '/categories',
   ITEMS: '/items',
   MENU: '/menu',
+  ORDERS: '/orders',
 };

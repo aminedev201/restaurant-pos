@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { toast } from 'react-hot-toast';
-import { 
+import {
   AtSymbolIcon,
   LockClosedIcon,
   EyeIcon,
@@ -112,7 +112,7 @@ const LoginPage = () => {
         {/* Logo and Title */}
         <div className="text-center mb-8">
           <div className="inline-flex items-center justify-center w-20 h-20 bg-gradient-to-br from-primary-500 to-primary-600 dark:from-primary-600 dark:to-primary-700 rounded-2xl mb-4 shadow-lg">
-            <img src={Logo} alt="Rest POS Logo"  />
+            <img src={Logo} alt="Rest POS Logo" />
           </div>
 
           <h1 className="text-3xl font-bold bg-gradient-to-r from-primary-600 to-primary-600 dark:from-primary-400 dark:to-primary-400 bg-clip-text text-transparent mb-2">
@@ -141,9 +141,8 @@ const LoginPage = () => {
                   onChange={handleChange}
                   disabled={isLoading}
                   placeholder="you@restaurant.com"
-                  className={`w-full pl-10 pr-4 py-3 border rounded-xl focus:ring-2 focus:ring-primary-500 focus:border-primary-500 focus:outline-none transition-all bg-white dark:bg-gray-700 text-gray-900 dark:text-white placeholder-gray-400 dark:placeholder-gray-500 disabled:opacity-50 disabled:cursor-not-allowed ${
-                    errors.email ? 'border-red-500 dark:border-red-500' : 'border-gray-200 dark:border-gray-600'
-                  }`}
+                  className={`w-full pl-10 pr-4 py-3 border rounded-xl  focus:border-primary-500 focus:outline-none transition-all bg-white dark:bg-gray-700 text-gray-900 dark:text-white placeholder-gray-400 dark:placeholder-gray-500 disabled:opacity-50 disabled:cursor-not-allowed ${errors.email ? 'border-red-500 dark:border-red-500' : 'border-gray-200 dark:border-gray-600'
+                    }`}
                 />
               </div>
               {errors.email && (
@@ -171,9 +170,8 @@ const LoginPage = () => {
                   onChange={handleChange}
                   disabled={isLoading}
                   placeholder="Enter your password"
-                  className={`w-full pl-10 pr-12 py-3 border rounded-xl focus:ring-2 focus:ring-primary-500 focus:border-primary-500 focus:outline-none transition-all bg-white dark:bg-gray-700 text-gray-900 dark:text-white placeholder-gray-400 dark:placeholder-gray-500 disabled:opacity-50 disabled:cursor-not-allowed ${
-                    errors.password ? 'border-red-500 dark:border-red-500' : 'border-gray-200 dark:border-gray-600'
-                  }`}
+                  className={`w-full pl-10 pr-12 py-3 border rounded-xl  focus:border-primary-500 focus:outline-none transition-all bg-white dark:bg-gray-700 text-gray-900 dark:text-white placeholder-gray-400 dark:placeholder-gray-500 disabled:opacity-50 disabled:cursor-not-allowed ${errors.password ? 'border-red-500 dark:border-red-500' : 'border-gray-200 dark:border-gray-600'
+                    }`}
                 />
                 <button
                   type="button"
@@ -225,9 +223,8 @@ const LoginPage = () => {
             <button
               type="submit"
               disabled={isLoading}
-              className={`w-full bg-gradient-to-r from-primary-600 to-primary-600 hover:from-primary-700 hover:to-primary-700 dark:from-primary-500 dark:to-primary-500 dark:hover:from-primary-600 dark:hover:to-primary-600 text-white font-medium py-3 px-4 rounded-xl transition-all duration-200 flex items-center justify-center gap-2 shadow-lg shadow-primary-500/30 ${
-                isLoading ? 'opacity-50 cursor-not-allowed' : ''
-              }`}
+              className={`w-full bg-gradient-to-r from-primary-600 to-primary-600 hover:from-primary-700 hover:to-primary-700 dark:from-primary-500 dark:to-primary-500 dark:hover:from-primary-600 dark:hover:to-primary-600 text-white font-medium py-3 px-4 rounded-xl transition-all duration-200 flex items-center justify-center gap-2 shadow-lg shadow-primary-500/30 ${isLoading ? 'opacity-50 cursor-not-allowed' : ''
+                }`}
             >
               {isLoading ? (
                 <LoadingSpinner size="sm" />

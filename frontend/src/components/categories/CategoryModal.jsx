@@ -49,17 +49,17 @@ const SvgPreview = ({ svg, className = 'w-6 h-6' }) => {
 // ─── Component ────────────────────────────────────────────────────────────────
 const CategoryModal = ({ mode, category, onClose, onSuccess }) => {
   const [formData, setFormData] = useState({ name: '', description: '', icon: '' });
-  const [errors, setErrors]     = useState({});
-  const [loading, setLoading]   = useState(false);
-  const [iconTab, setIconTab]   = useState('preset'); // 'preset' | 'custom'
+  const [errors, setErrors] = useState({});
+  const [loading, setLoading] = useState(false);
+  const [iconTab, setIconTab] = useState('preset'); // 'preset' | 'custom'
   const maxLength = 1000;
 
   useEffect(() => {
     if (category && mode === 'edit') {
       setFormData({
-        name:        category.name        || '',
+        name: category.name || '',
         description: category.description || '',
-        icon:        category.icon        || '',
+        icon: category.icon || '',
       });
       // If the icon matches no preset, switch to custom tab
       const isPreset = PRESET_ICONS.some(p => p.svg === category.icon);
@@ -69,11 +69,11 @@ const CategoryModal = ({ mode, category, onClose, onSuccess }) => {
 
   const validate = () => {
     const newErrors = {};
-    if (!formData.name.trim())                          newErrors.name = 'Name is required';
-    else if (formData.name.trim().length < 2)           newErrors.name = 'Name must be at least 2 characters';
-    else if (formData.name.trim().length > 255)         newErrors.name = 'Name must not exceed 255 characters';
-    if (formData.description?.length > maxLength)       newErrors.description = `Description must not exceed ${maxLength} characters`;
-    if (!formData.icon.trim())                          newErrors.icon = 'Icon is required';
+    if (!formData.name.trim()) newErrors.name = 'Name is required';
+    else if (formData.name.trim().length < 2) newErrors.name = 'Name must be at least 2 characters';
+    else if (formData.name.trim().length > 255) newErrors.name = 'Name must not exceed 255 characters';
+    if (formData.description?.length > maxLength) newErrors.description = `Description must not exceed ${maxLength} characters`;
+    if (!formData.icon.trim()) newErrors.icon = 'Icon is required';
     setErrors(newErrors);
     return Object.keys(newErrors).length === 0;
   };
@@ -162,9 +162,8 @@ const CategoryModal = ({ mode, category, onClose, onSuccess }) => {
                   onChange={handleChange}
                   placeholder="Enter category name"
                   disabled={loading}
-                  className={`w-full px-4 py-3 border rounded-lg focus:ring-2 focus:outline-none focus:ring-primary-500 focus:border-transparent bg-white dark:bg-gray-700 text-gray-900 dark:text-white placeholder-gray-400 dark:placeholder-gray-500 ${
-                    errors.name ? 'border-red-500 dark:border-red-500' : 'border-gray-300 dark:border-gray-600'
-                  }`}
+                  className={`w-full px-4 py-3 border rounded-lg focus:ring-2 focus:outline-none focus:ring-primary-500 focus:border-transparent bg-white dark:bg-gray-700 text-gray-900 dark:text-white placeholder-gray-400 dark:placeholder-gray-500 ${errors.name ? 'border-red-500 dark:border-red-500' : 'border-gray-300 dark:border-gray-600'
+                    }`}
                 />
                 {errors.name && (
                   <p className="mt-2 text-sm text-red-600 dark:text-red-400 flex items-center gap-1">
@@ -184,22 +183,20 @@ const CategoryModal = ({ mode, category, onClose, onSuccess }) => {
                   <button
                     type="button"
                     onClick={() => setIconTab('preset')}
-                    className={`flex-1 py-2 text-sm font-medium transition-colors ${
-                      iconTab === 'preset'
+                    className={`flex-1 py-2 text-sm font-medium transition-colors ${iconTab === 'preset'
                         ? 'bg-primary-600 text-white'
                         : 'bg-white dark:bg-gray-700 text-gray-600 dark:text-gray-400 hover:bg-gray-50 dark:hover:bg-gray-600'
-                    }`}
+                      }`}
                   >
                     Preset Icons
                   </button>
                   <button
                     type="button"
                     onClick={() => setIconTab('custom')}
-                    className={`flex-1 py-2 text-sm font-medium transition-colors flex items-center justify-center gap-1.5 ${
-                      iconTab === 'custom'
+                    className={`flex-1 py-2 text-sm font-medium transition-colors flex items-center justify-center gap-1.5 ${iconTab === 'custom'
                         ? 'bg-primary-600 text-white'
                         : 'bg-white dark:bg-gray-700 text-gray-600 dark:text-gray-400 hover:bg-gray-50 dark:hover:bg-gray-600'
-                    }`}
+                      }`}
                   >
                     <CodeBracketIcon className="w-4 h-4" />
                     Custom SVG
@@ -217,11 +214,10 @@ const CategoryModal = ({ mode, category, onClose, onSuccess }) => {
                           setFormData(prev => ({ ...prev, icon: preset.svg }));
                           if (errors.icon) setErrors(prev => ({ ...prev, icon: '' }));
                         }}
-                        className={`aspect-square flex items-center justify-center rounded-xl border-2 transition-all p-2 ${
-                          formData.icon === preset.svg
+                        className={`aspect-square flex items-center justify-center rounded-xl border-2 transition-all p-2 ${formData.icon === preset.svg
                             ? 'border-primary-500 bg-primary-50 dark:bg-primary-900/30 text-primary-600 dark:text-primary-400'
                             : 'border-gray-200 dark:border-gray-600 bg-white dark:bg-gray-700 text-gray-600 dark:text-gray-400 hover:border-primary-300 hover:bg-primary-50 dark:hover:bg-primary-900/20'
-                        }`}
+                          }`}
                       >
                         <SvgPreview svg={preset.svg} className="w-5 h-5 [&>svg]:w-full [&>svg]:h-full" />
                       </button>
@@ -236,9 +232,8 @@ const CategoryModal = ({ mode, category, onClose, onSuccess }) => {
                       placeholder='Paste your SVG here, e.g. <svg xmlns="..." viewBox="0 0 24 24">...</svg>'
                       rows="4"
                       disabled={loading}
-                      className={`focus:outline-none w-full px-4 py-3 border rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent bg-white dark:bg-gray-700 text-gray-900 dark:text-white placeholder-gray-400 dark:placeholder-gray-500 resize-none font-mono text-xs ${
-                        errors.icon ? 'border-red-500 dark:border-red-500' : 'border-gray-300 dark:border-gray-600'
-                      }`}
+                      className={`focus:outline-none w-full px-4 py-3 border rounded-lg  focus:border-transparent bg-white dark:bg-gray-700 text-gray-900 dark:text-white placeholder-gray-400 dark:placeholder-gray-500 resize-none font-mono text-xs ${errors.icon ? 'border-red-500 dark:border-red-500' : 'border-gray-300 dark:border-gray-600'
+                        }`}
                     />
                     {/* Live SVG preview */}
                     {formData.icon && (
@@ -272,9 +267,8 @@ const CategoryModal = ({ mode, category, onClose, onSuccess }) => {
                   rows="3"
                   maxLength={maxLength}
                   disabled={loading}
-                  className={`focus:outline-none w-full px-4 py-3 border rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent bg-white dark:bg-gray-700 text-gray-900 dark:text-white placeholder-gray-400 dark:placeholder-gray-500 resize-none max-h-[150px] overflow-y-auto ${
-                    errors.description ? 'border-red-500 dark:border-red-500' : 'border-gray-300 dark:border-gray-600'
-                  }`}
+                  className={`focus:outline-none w-full px-4 py-3 border rounded-lg  focus:border-transparent bg-white dark:bg-gray-700 text-gray-900 dark:text-white placeholder-gray-400 dark:placeholder-gray-500 resize-none max-h-[150px] overflow-y-auto ${errors.description ? 'border-red-500 dark:border-red-500' : 'border-gray-300 dark:border-gray-600'
+                    }`}
                 />
                 <div className="flex items-center justify-between mt-2">
                   {errors.description ? (

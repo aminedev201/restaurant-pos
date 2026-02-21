@@ -4,62 +4,49 @@
 @tailwind components;
 @tailwind utilities;
 
-/* @layer base {
-  * {
-    @apply border-border;
-  }
-  
-  body {
-    @apply bg-white dark:bg-gray-900 text-gray-900 dark:text-gray-100;
+/* ── Primary color tokens (synced from tailwind.config.js) ── */
+@layer base {
+  :root {
+    --primary-50:  #fff5e6;
+    --primary-100: #ffe8cc;
+    --primary-200: #ffd199;
+    --primary-300: #ffba66;
+    --primary-400: #ffa333;
+    --primary-500: #CD5700;
+    --primary-600: #a44600;
+    --primary-700: #7b3400;
+    --primary-800: #522300;
+    --primary-900: #291100;
+    --primary-950: #1a0a00;
   }
 }
 
-@layer components {
-  .input-field {
-    @apply w-full px-4 py-3 rounded-lg border border-gray-300 dark:border-gray-600 
-           bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100
-           placeholder-gray-400 dark:placeholder-gray-500
-           focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-transparent
-           transition duration-200;
-  }
+/* ── Scrollbar ── */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
 
-  .input-field-error {
-    @apply border-red-500 dark:border-red-400 focus:ring-red-500;
-  }
+::-webkit-scrollbar-track {
+  background: transparent;
+  border-radius: 999px;
+}
 
-  .btn-primary {
-    @apply w-full bg-gradient-to-r from-primary-500 to-primary-600 hover:from-primary-600 hover:to-primary-700
-           text-white font-semibold py-3 px-4 rounded-lg
-           transition duration-200 transform hover:scale-[1.02] active:scale-[0.98]
-           focus:outline-none focus:ring-2 focus:ring-primary-500 focus:ring-offset-2
-           dark:focus:ring-offset-gray-900
-           disabled:opacity-50 disabled:cursor-not-allowed disabled:transform-none;
-  }
+::-webkit-scrollbar-thumb {
+  background: var(--primary-400);
+  border-radius: 999px;
+  transition: background 0.2s;
+}
 
-  .btn-secondary {
-    @apply w-full bg-gray-100 dark:bg-gray-800 hover:bg-gray-200 dark:hover:bg-gray-700
-           text-gray-900 dark:text-gray-100 font-semibold py-3 px-4 rounded-lg
-           transition duration-200 transform hover:scale-[1.02] active:scale-[0.98]
-           focus:outline-none focus:ring-2 focus:ring-gray-500 focus:ring-offset-2
-           dark:focus:ring-offset-gray-900
-           disabled:opacity-50 disabled:cursor-not-allowed disabled:transform-none;
-  }
+::-webkit-scrollbar-thumb:hover {
+  background: var(--primary-600);
+}
 
-  .auth-card {
-    @apply bg-white dark:bg-gray-800 rounded-2xl shadow-xl p-8 w-full max-w-md
-           border border-gray-100 dark:border-gray-700;
-  }
+/* Dark mode */
+.dark ::-webkit-scrollbar-thumb {
+  background: var(--primary-500);
+}
 
-  .link {
-    @apply text-primary-600 dark:text-primary-400 hover:text-primary-700 dark:hover:text-primary-300
-           font-medium transition duration-200 underline-offset-4 hover:underline;
-  }
-
-  .error-text {
-    @apply text-sm text-red-600 dark:text-red-400 mt-1;
-  }
-
-  .label {
-    @apply block text-sm font-semibold text-gray-700 dark:text-gray-300 mb-2;
-  }
-} */
+.dark ::-webkit-scrollbar-thumb:hover {
+  background: var(--primary-400);
+}

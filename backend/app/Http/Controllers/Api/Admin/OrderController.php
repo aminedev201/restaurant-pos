@@ -13,7 +13,6 @@ use Illuminate\Support\Facades\DB;
 
 class OrderController extends Controller
 {
-    // ── GET /orders ───────────────────────────────────────────────────────────
     public function index(Request $request)
     {
         try {
@@ -48,8 +47,6 @@ class OrderController extends Controller
             ], 500);
         }
     }
-
-    // ── POST /orders ──────────────────────────────────────────────────────────
     public function store(OrderRequest $request)
     {
         DB::beginTransaction();
@@ -131,8 +128,6 @@ class OrderController extends Controller
             ], 500);
         }
     }
-
-    // ── GET /orders/{id} ──────────────────────────────────────────────────────
     public function show($id)
     {
         try {
@@ -162,8 +157,6 @@ class OrderController extends Controller
             ], 500);
         }
     }
-
-    // ── PATCH /orders/{id}/status ─────────────────────────────────────────────
     public function updateStatus(Request $request, $id)
     {
         try {
@@ -198,13 +191,11 @@ class OrderController extends Controller
             ], 500);
         }
     }
-
-    // ── PATCH /orders/{id}/payment ────────────────────────────────────────────
     public function updatePayment(Request $request, $id)
     {
         try {
             $request->validate([
-                'payment_status' => 'required|in:unpaid,paid,refunded',
+                'payment_status' => 'sometimes|in:unpaid,paid,refunded',
                 'payment_method' => 'sometimes|in:cash,card,mobile',
             ]);
 
@@ -236,34 +227,33 @@ class OrderController extends Controller
         }
     }
 
-    // ── DELETE /orders/{id} ───────────────────────────────────────────────────
-    public function destroy($id)
-    {
-        try {
-            $order = Order::where('id', $id)
-                ->where('user_id', Auth::id())
-                ->first();
+    // public function destroy($id)
+    // {
+    //     try {
+    //         $order = Order::where('id', $id)
+    //             ->where('user_id', Auth::id())
+    //             ->first();
 
-            if (!$order) {
-                return response()->json([
-                    'success' => false,
-                    'message' => 'Order not found',
-                ], 404);
-            }
+    //         if (!$order) {
+    //             return response()->json([
+    //                 'success' => false,
+    //                 'message' => 'Order not found',
+    //             ], 404);
+    //         }
 
-            $order->delete(); // cascades to order_items
+    //         $order->delete(); // cascades to order_items
 
-            return response()->json([
-                'success' => true,
-                'message' => 'Order deleted successfully',
-            ], 200);
+    //         return response()->json([
+    //             'success' => true,
+    //             'message' => 'Order deleted successfully',
+    //         ], 200);
 
-        } catch (\Exception $e) {
-            return response()->json([
-                'success' => false,
-                'message' => 'Failed to delete order',
-                'error'   => $e->getMessage(),
-            ], 500);
-        }
-    }
+    //     } catch (\Exception $e) {
+    //         return response()->json([
+    //             'success' => false,
+    //             'message' => 'Failed to delete order',
+    //             'error'   => $e->getMessage(),
+    //         ], 500);
+    //     }
+    // }
 }

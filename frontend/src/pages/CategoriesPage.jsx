@@ -112,10 +112,10 @@ const CategoriesPage = () => {
     );
   };
 
-  const handleCreate     = () => { setModalMode('create'); setSelectedCategory(null); setShowModal(true); };
-  const handleEdit       = (cat) => { setModalMode('edit'); setSelectedCategory(cat); setShowModal(true); };
-  const handleView       = (cat) => { setSelectedCategory(cat); setShowViewModal(true); };
-  const handleDelete     = (cat) => { setSelectedCategory(cat); setDeleteType('single'); setShowDeleteModal(true); };
+  const handleCreate = () => { setModalMode('create'); setSelectedCategory(null); setShowModal(true); };
+  const handleEdit = (cat) => { setModalMode('edit'); setSelectedCategory(cat); setShowModal(true); };
+  const handleView = (cat) => { setSelectedCategory(cat); setShowViewModal(true); };
+  const handleDelete = (cat) => { setSelectedCategory(cat); setDeleteType('single'); setShowDeleteModal(true); };
   const handleBulkDelete = () => {
     if (selectedCategories.length === 0) { alert('Please select categories to delete'); return; }
     setDeleteType('bulk');
@@ -125,11 +125,11 @@ const CategoriesPage = () => {
   const handleExportJSON = () => {
     if (filteredCategories.length === 0) { alert('No data to export'); return; }
     const exportData = filteredCategories.map(cat => ({
-      name:        cat.name,
+      name: cat.name,
       description: cat.description,
-      icon:        cat.icon || '',
-      created_at:  cat.created_at,
-      updated_at:  cat.updated_at,
+      icon: cat.icon || '',
+      created_at: cat.created_at,
+      updated_at: cat.updated_at,
     }));
     const dataStr = JSON.stringify(exportData, null, 2);
     const dataUri = 'data:application/json;charset=utf-8,' + encodeURIComponent(dataStr);
@@ -142,9 +142,9 @@ const CategoriesPage = () => {
   const handleExportExcel = () => {
     if (filteredCategories.length === 0) { alert('No data to export'); return; }
     const exportData = filteredCategories.map(cat => ({
-      Name:         cat.name,
-      Description:  cat.description || '',
-      Icon:         cat.icon || '',
+      Name: cat.name,
+      Description: cat.description || '',
+      Icon: cat.icon || '',
       'Created At': new Date(cat.created_at).toLocaleDateString(),
       'Updated At': new Date(cat.updated_at).toLocaleDateString(),
     }));
@@ -248,11 +248,11 @@ const CategoriesPage = () => {
   };
 
   // Pagination
-  const indexOfLastItem    = currentPage * itemsPerPage;
-  const indexOfFirstItem   = indexOfLastItem - itemsPerPage;
-  const currentCategories  = filteredCategories.slice(indexOfFirstItem, indexOfLastItem);
-  const totalPages         = Math.ceil(filteredCategories.length / itemsPerPage);
-  const paginate           = (n) => setCurrentPage(n);
+  const indexOfLastItem = currentPage * itemsPerPage;
+  const indexOfFirstItem = indexOfLastItem - itemsPerPage;
+  const currentCategories = filteredCategories.slice(indexOfFirstItem, indexOfLastItem);
+  const totalPages = Math.ceil(filteredCategories.length / itemsPerPage);
+  const paginate = (n) => setCurrentPage(n);
   const handleItemsPerPageChange = (e) => { setItemsPerPage(Number(e.target.value)); setCurrentPage(1); };
 
   const getPageNumbers = () => {
@@ -301,7 +301,7 @@ const CategoriesPage = () => {
                 placeholder="Search categories by name..."
                 value={searchTerm}
                 onChange={(e) => setSearchTerm(e.target.value)}
-                className="w-full pl-9 sm:pl-10 pr-4 py-2 sm:py-2.5 text-sm sm:text-base border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent bg-white dark:bg-gray-700 text-gray-900 dark:text-white placeholder-gray-400 dark:placeholder-gray-500 focus:outline-none"
+                className="w-full pl-9 sm:pl-10 pr-4 py-2 sm:py-2.5 text-sm sm:text-base border border-gray-300 dark:border-gray-600 rounded-lg  focus:border-transparent bg-white dark:bg-gray-700 text-gray-900 dark:text-white placeholder-gray-400 dark:placeholder-gray-500 focus:outline-none"
               />
             </div>
 
@@ -326,9 +326,9 @@ const CategoriesPage = () => {
                       <span className="hidden sm:inline">Export</span>
                     </button>
                     <div className="absolute left-0 mt-2 w-40 sm:w-48 bg-white dark:bg-gray-800 rounded-lg shadow-lg border border-gray-200 dark:border-gray-700 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 z-10">
-                      <button onClick={handleExportJSON}  className="w-full px-3 sm:px-4 py-2 text-left text-xs sm:text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 rounded-t-lg">JSON</button>
+                      <button onClick={handleExportJSON} className="w-full px-3 sm:px-4 py-2 text-left text-xs sm:text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 rounded-t-lg">JSON</button>
                       <button onClick={handleExportExcel} className="w-full px-3 sm:px-4 py-2 text-left text-xs sm:text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700">Excel</button>
-                      <button onClick={handleExportWord}  className="w-full px-3 sm:px-4 py-2 text-left text-xs sm:text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 rounded-b-lg">Word</button>
+                      <button onClick={handleExportWord} className="w-full px-3 sm:px-4 py-2 text-left text-xs sm:text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 rounded-b-lg">Word</button>
                     </div>
                   </div>
 
@@ -448,9 +448,9 @@ const CategoriesPage = () => {
                     <select
                       value={itemsPerPage}
                       onChange={handleItemsPerPageChange}
-                      className="bg-white dark:bg-gray-800 border border-gray-300 dark:border-gray-600 rounded-lg px-3 py-2 text-sm text-gray-900 dark:text-white focus:ring-2 focus:ring-primary-500 focus:border-primary-500 transition-colors"
+                      className="bg-white dark:bg-gray-800 border border-gray-300 dark:border-gray-600 rounded-lg px-3 py-2 text-sm text-gray-900 dark:text-white  focus:border-primary-500 transition-colors"
                     >
-                      {[5,10,25,50,100].map(n => <option key={n} value={n}>{n}</option>)}
+                      {[5, 10, 25, 50, 100].map(n => <option key={n} value={n}>{n}</option>)}
                     </select>
                     <span className="text-xs sm:text-sm text-gray-600 dark:text-gray-400">
                       entries (Showing {indexOfFirstItem + 1}–{Math.min(indexOfLastItem, filteredCategories.length)} of {filteredCategories.length})
@@ -469,11 +469,10 @@ const CategoriesPage = () => {
                           <button
                             key={number}
                             onClick={() => paginate(number)}
-                            className={`px-3 sm:px-4 py-2 rounded-lg font-medium transition-colors text-sm ${
-                              currentPage === number
+                            className={`px-3 sm:px-4 py-2 rounded-lg font-medium transition-colors text-sm ${currentPage === number
                                 ? 'bg-primary-600 text-white'
                                 : 'bg-white dark:bg-gray-800 border border-gray-300 dark:border-gray-600 text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-700'
-                            }`}
+                              }`}
                           >
                             {number}
                           </button>

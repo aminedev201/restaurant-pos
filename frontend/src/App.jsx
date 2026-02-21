@@ -19,6 +19,7 @@ import DashboardPage from "./pages/DashboardPage";
 import CategoriesPage from './pages/CategoriesPage';
 import ItemsPage from './pages/ItemsPage';
 import MenuPage from './pages/MenuPage';
+import OrdersPage from './pages/OrdersPage';
 
 
 // Guest Routes Configuration
@@ -36,6 +37,7 @@ const protectedRoutes = [
   { path: ROUTES.CATEGORIES, element: <CategoriesPage /> },
   { path: ROUTES.ITEMS, element: <ItemsPage /> },
   { path: ROUTES.MENU, element: <MenuPage /> },
+  { path: ROUTES.ORDERS, element: <OrdersPage /> },
 ];
 
 const App = () => {
