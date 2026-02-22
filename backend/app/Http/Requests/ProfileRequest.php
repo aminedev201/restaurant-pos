@@ -19,8 +19,8 @@ class ProfileRequest extends FormRequest
     public function rules(): array
     {
         return match ($this->route()->getName()) {
-            'admin.profile.update'          => $this->updateProfileRules(),
-            'admin.profile.change-password' => $this->changePasswordRules(),
+            'profile.update'          => $this->updateProfileRules(),
+            'profile.change-password' => $this->changePasswordRules(),
             default                         => [],
         };
     }

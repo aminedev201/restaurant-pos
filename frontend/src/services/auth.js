@@ -37,7 +37,7 @@ class AuthService {
   // ─── Profile ────────────────────────────────────────────────────────────────
 
   async getProfile() {
-    const response = await axiosInstance.get('/admin/profile');
+    const response = await axiosInstance.get('/profile');
 
     if (response.data.success && response.data.data?.user) {
       this.updateStoredUser(response.data.data.user);
@@ -48,7 +48,7 @@ class AuthService {
   }
 
   async updateProfile(formData) {
-    const response = await axiosInstance.post('/admin/profile/update', formData, {
+    const response = await axiosInstance.post('/profile/update', formData, {
       headers: { 'Content-Type': 'multipart/form-data' },
     });
 
@@ -60,12 +60,12 @@ class AuthService {
   }
 
   async changePassword(data) {
-    const response = await axiosInstance.post('/admin/profile/change-password', data);
+    const response = await axiosInstance.post('/profile/change-password', data);
     return response.data;
   }
 
   async removeAvatar() {
-    const response = await axiosInstance.delete('/admin/profile/avatar');
+    const response = await axiosInstance.delete('/profile/avatar');
     console.log('ok');
     if (response.data.success && response.data.data?.user) {
       this.updateStoredUser(response.data.data.user);
@@ -75,7 +75,7 @@ class AuthService {
   }
 
   async destroyAccount() {
-    const response = await axiosInstance.delete('/admin/profile/destroy');
+    const response = await axiosInstance.delete('/profile/destroy');
 
     if (response.data.success) {
       this.clearAuthData();

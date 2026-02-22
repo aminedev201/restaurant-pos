@@ -3,8 +3,10 @@
 use App\Http\Controllers\Api\Admin\AuthController;
 use App\Http\Controllers\Api\Admin\CategoryController;
 use App\Http\Controllers\Api\Admin\ItemController;
+use App\Http\Controllers\Api\Admin\NavBadgesController;
 use App\Http\Controllers\Api\Admin\OrderController;
 use App\Http\Controllers\Api\Admin\ProfileController;
+use App\Http\Controllers\Api\Admin\StatsController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -56,12 +58,15 @@ Route::middleware(['auth:sanctum', 'verified', 'user.status'])->group(function (
     });
 
     //Profile
-    Route::prefix('admin/profile')->name('admin.profile.')->group(function () {
+    Route::prefix('profile')->name('profile.')->group(function () {
         Route::get('/',                 [ProfileController::class, 'show'])           ->name('show');
         Route::post('/update',          [ProfileController::class, 'update'])         ->name('update');
         Route::post('/change-password', [ProfileController::class, 'changePassword']) ->name('change-password');
         Route::delete('/avatar',        [ProfileController::class, 'removeAvatar'])   ->name('remove-avatar');
         Route::delete( '/destroy',       [ProfileController::class, 'destroy'])        ->name('destroy');
-});
+    });
+
+    // Statistics
+    Route::get('stats', [StatsController::class, 'index']);
 
 });

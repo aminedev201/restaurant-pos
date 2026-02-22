@@ -21,6 +21,7 @@ import ItemsPage from './pages/ItemsPage';
 import MenuPage from './pages/MenuPage';
 import OrdersPage from './pages/OrdersPage';
 import ProfilePage from './pages/ProfilePage';
+import { NavCountsProvider } from './contexts/NavCountsContext';
 
 
 // Guest Routes Configuration
@@ -46,37 +47,39 @@ const App = () => {
   return (
       <ThemeProvider>
         <AuthProvider>
-          <BrowserRouter>
-            <Routes>
-              {/* Home Route */}
-              <Route path={ROUTES.HOME} element={<Navigate to={ROUTES.LOGIN} replace />} />
+          <NavCountsProvider>
+            <BrowserRouter>
+              <Routes>
+                {/* Home Route */}
+                <Route path={ROUTES.HOME} element={<Navigate to={ROUTES.LOGIN} replace />} />
 
-              {/* Guest Routes (Auth) */}
-              {guestRoutes.map((route) => (
-                <Route
-                  key={route.path}
-                  path={route.path}
-                  element={<GuestRoute>{route.element}</GuestRoute>}
-                />
-              ))}
+                {/* Guest Routes (Auth) */}
+                {guestRoutes.map((route) => (
+                  <Route
+                    key={route.path}
+                    path={route.path}
+                    element={<GuestRoute>{route.element}</GuestRoute>}
+                  />
+                ))}
 
-              {/* Protected Routes */}
-              {protectedRoutes.map((route) => (
-                <Route
-                  key={route.path}
-                  path={route.path}
-                  element={<ProtectedRoute>{route.element}</ProtectedRoute>}
-                />
-              ))}
+                {/* Protected Routes */}
+                {protectedRoutes.map((route) => (
+                  <Route
+                    key={route.path}
+                    path={route.path}
+                    element={<ProtectedRoute>{route.element}</ProtectedRoute>}
+                  />
+                ))}
 
-              {/* 404 Not Found */}
-              <Route path="*" element={<NotFoundPage />} />
-            </Routes>
+                {/* 404 Not Found */}
+                <Route path="*" element={<NotFoundPage />} />
+              </Routes>
 
-            {/* Global Toast Notifications */}
-            <ToasterConfig />
+              {/* Global Toast Notifications */}
+              <ToasterConfig />
 
-          </BrowserRouter>
+            </BrowserRouter>
+          </NavCountsProvider>
         </AuthProvider>
       </ThemeProvider>
 

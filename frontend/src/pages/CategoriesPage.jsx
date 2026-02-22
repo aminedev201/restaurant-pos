@@ -25,6 +25,7 @@ import {
   ArrowsUpDownIcon,
   InboxIcon,
 } from '@heroicons/react/24/outline';
+import { useNavCounts } from '../contexts/NavCountsContext';
 
 const SvgPreview = ({ svg, className = 'w-5 h-5' }) => {
   if (!svg) return null;
@@ -32,6 +33,7 @@ const SvgPreview = ({ svg, className = 'w-5 h-5' }) => {
 };
 
 const CategoriesPage = () => {
+  const { setNavCount } = useNavCounts();
   const [categories, setCategories] = useState([]);
   const [filteredCategories, setFilteredCategories] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -63,7 +65,10 @@ const CategoriesPage = () => {
     try {
       setLoading(true);
       const { data } = await axiosInstance.get('/categories');
-      if (data.success) setCategories(data.data);
+      if (data.success) {
+        setCategories(data.data);
+        setNavCount({ categories: data.data.length }); // ← sync sidebar
+      }
     } catch (error) {
       console.error('Error fetching categories:', error);
     } finally {
@@ -211,8 +216,8 @@ const CategoriesPage = () => {
         th{background-color:${primaryColors[500]};color:white;padding:12px;text-align:left;font-weight:bold;font-size:12px;text-transform:uppercase;}
         td{padding:10px 12px;border-bottom:1px solid #e5e7eb;font-size:13px;}
         tr:nth-child(even){background-color:${primaryColors[50]};}
-        .icon-cell{width:28px;height:28px;display:flex;align-items:center;justify-content:center;background:${primaryColors[500]};border-radius:6px;color:#fff;}
-        .icon-cell svg{width:18px;height:18px;}
+        .icon-cell{width:22px;height:22px;display:flex;align-items:center;justify-content:center;background:${primaryColors[50]};border-radius:6px;color:${primaryColors[500]};}
+        .icon-cell svg{width:14px;height:14px;}
         @media print{tr:hover{background-color:inherit;}}
       </style></head>
       <body>

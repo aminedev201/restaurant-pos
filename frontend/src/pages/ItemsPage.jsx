@@ -25,6 +25,7 @@ import {
 } from '@heroicons/react/24/outline';
 import ItemModal from '../components/items/ItemModal';
 import ShowItemModal from '../components/items/ShowItemModal';
+import { useNavCounts } from '../contexts/NavCountsContext';
 
 // ─── Helpers ──────────────────────────────────────────────────────────────────
 const SvgPreview = ({ svg, className = 'w-4 h-4' }) => {
@@ -124,6 +125,7 @@ const CategoryFilterSelect = ({ categories, value, onChange }) => {
 // ─────────────────────────────────────────────────────────────────────────────
 
 const ItemsPage = () => {
+  const { setNavCount } = useNavCounts();
   const [items, setItems] = useState([]);
   const [filteredItems, setFilteredItems] = useState([]);
   const [categories, setCategories] = useState([]);
@@ -157,7 +159,10 @@ const ItemsPage = () => {
     try {
       setLoading(true);
       const { data } = await axiosInstance.get('/items');
-      if (data.success) setItems(data.data);
+      if (data.success) {
+        setItems(data.data);
+        setNavCount({ items: data.data.length }); // ← sync sidebar
+      }
     } catch (error) {
       console.error('Error fetching items:', error);
     } finally {
@@ -316,7 +321,7 @@ const ItemsPage = () => {
         tr:nth-child(even){background-color:${primaryColors[50]};}
         .price{font-weight:600;color:${primaryColors[700]};}
         .cat-cell{display:flex;align-items:center;gap:8px;}
-        .cat-icon{width:22px;height:22px;display:flex;align-items:center;justify-content:center;background:#eff6ff;border-radius:5px;color:#2563eb;}
+        .cat-icon{width:22px;height:22px;display:flex;align-items:center;justify-content:center;background:${primaryColors[50]};border-radius:5px;color:${primaryColors[500]};}
         .cat-icon svg{width:14px;height:14px;}
         @media print{tr:hover{background-color:inherit;}}
       </style></head>

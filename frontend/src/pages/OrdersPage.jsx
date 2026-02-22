@@ -40,6 +40,7 @@ import {
   StatusIcon,
   PaymentMethodIcon,
 } from '../components/orders/OrderConstants';
+import { useNavCounts } from '../contexts/NavCountsContext';
 
 
 // ─── Generic Filter Select ────────────────────────────────────────────────────
@@ -156,6 +157,7 @@ const InlineSelect = ({ value, options, styles, onChange, loading, icons }) => {
 
 // ─── Main OrdersPage ──────────────────────────────────────────────────────────
 const OrdersPage = () => {
+  const { setNavCount } = useNavCounts();
   const [orders, setOrders]                   = useState([]);
   const [filteredOrders, setFilteredOrders]   = useState([]);
   const [loading, setLoading]                 = useState(true);
@@ -187,7 +189,12 @@ const OrdersPage = () => {
       setLoading(true);
       const { data } = await axiosInstance.get('/orders');
       if (data.success) {
-        setOrders(data.data?.data || data.data || []);
+        const list = data.data?.data || data.data || [];
+        setOrders(list);
+
+        // Compute both counts from the already-fetched list — zero extra requests
+        const pending = list.filter(o => o.status === 'pending').length;
+        setNavCount({ orders: list.length, pending }); // ← sync sidebar
       }
     } catch (error) {
       console.error('Error fetching orders:', error);
@@ -247,7 +254,18 @@ const OrdersPage = () => {
     setUpdatingId(id);
     try {
       const { data } = await axiosInstance.patch(`/orders/${id}/status`, { status });
-      if (data.success) { updateOrderLocally(id, { status }); toast.success('Order status updated'); }
+      if (data.success) {
+        updateOrderLocally(id, { status });
+        toast.success('Order status updated');
+
+        // Recompute pending from the latest local state
+          setOrders(prev => {
+            const updated = prev.map(o => o.id === id ? { ...o, status } : o);
+            const pending = updated.filter(o => o.status === 'pending').length;
+            setNavCount({ orders: updated.length, pending });
+            return updated;
+        });
+      }
     } catch { toast.error('Failed to update status'); }
     finally { setUpdatingId(null); }
   };
