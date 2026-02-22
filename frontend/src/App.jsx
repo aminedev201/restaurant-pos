@@ -20,6 +20,7 @@ import CategoriesPage from './pages/CategoriesPage';
 import ItemsPage from './pages/ItemsPage';
 import MenuPage from './pages/MenuPage';
 import OrdersPage from './pages/OrdersPage';
+import ProfilePage from './pages/ProfilePage';
 
 
 // Guest Routes Configuration
@@ -38,6 +39,7 @@ const protectedRoutes = [
   { path: ROUTES.ITEMS, element: <ItemsPage /> },
   { path: ROUTES.MENU, element: <MenuPage /> },
   { path: ROUTES.ORDERS, element: <OrdersPage /> },
+  { path: ROUTES.PROFILE, element: <ProfilePage /> },
 ];
 
 const App = () => {

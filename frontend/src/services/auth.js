@@ -8,11 +8,11 @@ class AuthService {
 
   async login(credentials) {
     const response = await axiosInstance.post('/login', credentials);
-    
+
     if (response.data.success && response.data.data?.access_token) {
       this.setAuthData(response.data.data.access_token, response.data.data.user);
     }
-    
+
     return response.data;
   }
 
@@ -26,38 +26,73 @@ class AuthService {
 
   async getCurrentUser() {
     const response = await axiosInstance.get('/user');
-    
+
     if (response.data.success && response.data.data?.user) {
       return response.data.data.user;
     }
-    
+
     throw new Error('Failed to fetch user');
   }
 
-  async resendVerificationEmail(email) {
-    const response = await axiosInstance.post('/email/resend', { email });
+  // ─── Profile ────────────────────────────────────────────────────────────────
+
+  async getProfile() {
+    const response = await axiosInstance.get('/admin/profile');
+
+    if (response.data.success && response.data.data?.user) {
+      this.updateStoredUser(response.data.data.user);
+      return response.data.data.user;
+    }
+
+    throw new Error('Failed to fetch profile');
+  }
+
+  async updateProfile(formData) {
+    const response = await axiosInstance.post('/admin/profile/update', formData, {
+      headers: { 'Content-Type': 'multipart/form-data' },
+    });
+
+    if (response.data.success && response.data.data?.user) {
+      this.updateStoredUser(response.data.data.user);
+    }
+
     return response.data;
   }
 
-  // NEW METHOD - Check email verification status
-  async checkVerificationStatus(email) {
-    const response = await axiosInstance.post('/email/check-status', { email });
+  async changePassword(data) {
+    const response = await axiosInstance.post('/admin/profile/change-password', data);
     return response.data;
   }
 
-  async forgotPassword(data) {
-    const response = await axiosInstance.post('/forgot-password', data);
+  async removeAvatar() {
+    const response = await axiosInstance.delete('/admin/profile/avatar');
+    console.log('ok');
+    if (response.data.success && response.data.data?.user) {
+      this.updateStoredUser(response.data.data.user);
+    }
+
     return response.data;
   }
 
-  async validateResetToken(data) {
-    const response = await axiosInstance.post('/validate-reset-token', data);
+  async destroyAccount() {
+    const response = await axiosInstance.delete('/admin/profile/destroy');
+
+    if (response.data.success) {
+      this.clearAuthData();
+    }
+
     return response.data;
   }
 
-  async resetPassword(data) {
-    const response = await axiosInstance.post('/reset-password', data);
-    return response.data;
+  // ─── Helpers ────────────────────────────────────────────────────────────────
+
+  /**
+   * Merge updated fields into the stored user object.
+   */
+  updateStoredUser(updatedUser) {
+    const stored = this.getStoredUser();
+    const merged = { ...(stored ?? {}), ...updatedUser };
+    localStorage.setItem('user', JSON.stringify(merged));
   }
 
   setAuthData(token, user) {
@@ -86,8 +121,32 @@ class AuthService {
     }
     return null;
   }
+
+  async resendVerificationEmail(email) {
+    const response = await axiosInstance.post('/email/resend', { email });
+    return response.data;
+  }
+
+  async checkVerificationStatus(email) {
+    const response = await axiosInstance.post('/email/check-status', { email });
+    return response.data;
+  }
+
+  async forgotPassword(data) {
+    const response = await axiosInstance.post('/forgot-password', data);
+    return response.data;
+  }
+
+  async validateResetToken(data) {
+    const response = await axiosInstance.post('/validate-reset-token', data);
+    return response.data;
+  }
+
+  async resetPassword(data) {
+    const response = await axiosInstance.post('/reset-password', data);
+    return response.data;
+  }
 }
 
 export const authService = new AuthService();
-
 export default authService;

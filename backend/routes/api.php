@@ -4,6 +4,7 @@ use App\Http\Controllers\Api\Admin\AuthController;
 use App\Http\Controllers\Api\Admin\CategoryController;
 use App\Http\Controllers\Api\Admin\ItemController;
 use App\Http\Controllers\Api\Admin\OrderController;
+use App\Http\Controllers\Api\Admin\ProfileController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -51,7 +52,16 @@ Route::middleware(['auth:sanctum', 'verified', 'user.status'])->group(function (
         Route::get('/{id}',          'show');
         Route::delete('/{id}',       'destroy');
         Route::patch('/{id}/status', 'updateStatus');
-        Route::patch('/{id}/payment','updatePayment');  
+        Route::patch('/{id}/payment','updatePayment');
     });
+
+    //Profile
+    Route::prefix('admin/profile')->name('admin.profile.')->group(function () {
+        Route::get('/',                 [ProfileController::class, 'show'])           ->name('show');
+        Route::post('/update',          [ProfileController::class, 'update'])         ->name('update');
+        Route::post('/change-password', [ProfileController::class, 'changePassword']) ->name('change-password');
+        Route::delete('/avatar',        [ProfileController::class, 'removeAvatar'])   ->name('remove-avatar');
+        Route::delete( '/destroy',       [ProfileController::class, 'destroy'])        ->name('destroy');
+});
 
 });

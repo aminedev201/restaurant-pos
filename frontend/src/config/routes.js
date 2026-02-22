@@ -11,4 +11,5 @@ export const ROUTES = {
   ITEMS: '/items',
   MENU: '/menu',
   ORDERS: '/orders',
+  PROFILE: '/profile',
 };

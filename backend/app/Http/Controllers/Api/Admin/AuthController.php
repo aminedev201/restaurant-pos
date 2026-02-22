@@ -9,6 +9,7 @@ use App\Http\Requests\ResendVerificationRequest;
 use App\Http\Requests\ForgotPasswordRequest;
 use App\Http\Requests\ResetPasswordRequest;
 use App\Models\User;
+use App\Services\UserDTO;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
@@ -39,14 +40,7 @@ class AuthController extends Controller
                 'success' => true,
                 'message' => 'Registration successful. Please check your email to verify your account.',
                 'data' => [
-                    'user' => [
-                        'id' => $user->id,
-                        'name' => $user->name,
-                        'email' => $user->email,
-                        'email_verified_at' => $user->email_verified_at,
-                        'status' => $user->status,
-                        'created_at' => $user->created_at,
-                    ]
+                    'user' => UserDTO::format($user)
                 ]
             ], 201);
 
@@ -103,14 +97,7 @@ class AuthController extends Controller
                 'success' => true,
                 'message' => 'Login successful',
                 'data' => [
-                    'user' => [
-                        'id' => $user->id,
-                        'name' => $user->name,
-                        'email' => $user->email,
-                        'email_verified_at' => $user->email_verified_at,
-                        'status' => $user->status,
-                        'created_at' => $user->created_at,
-                    ],
+                    'user' => UserDTO::format($user),
                     'access_token' => $token,
                     'token_type' => 'Bearer',
                     'expires_at' => $expiresAt->toDateTimeString(),
@@ -159,14 +146,7 @@ class AuthController extends Controller
             return response()->json([
                 'success' => true,
                 'data' => [
-                    'user' => [
-                        'id' => $user->id,
-                        'name' => $user->name,
-                        'email' => $user->email,
-                        'email_verified_at' => $user->email_verified_at,
-                        'status' => $user->status,
-                        'created_at' => $user->created_at,
-                    ]
+                    'user' => UserDTO::format($user)
                 ]
             ], 200);
 

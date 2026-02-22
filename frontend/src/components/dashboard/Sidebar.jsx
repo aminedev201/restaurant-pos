@@ -49,16 +49,16 @@ const Sidebar = ({ isOpen, isMobileOpen, onClose }) => {
   ];
 
   const secondaryMenuItems = [
-    {
-      title: 'Settings',
-      path: '/settings',
-      icon: CogIcon,
-    },
-    {
-      title: 'Help & Support',
-      path: '/support',
-      icon: QuestionMarkCircleIcon,
-    },
+    // {
+    //   title: 'Settings',
+    //   path: '/settings',
+    //   icon: CogIcon,
+    // },
+    // {
+    //   title: 'Help & Support',
+    //   path: '/support',
+    //   icon: QuestionMarkCircleIcon,
+    // },
   ];
 
   const isActive = (path) => location.pathname === path;
@@ -160,7 +160,7 @@ const Sidebar = ({ isOpen, isMobileOpen, onClose }) => {
             </div>
 
             {/* Divider */}
-            <div className={`my-4 ${isOpen ? 'mx-3' : 'mx-2 lg:mx-3'} border-t border-gray-200 dark:border-gray-700`}></div>
+            {/* <div className={`my-4 ${isOpen ? 'mx-3' : 'mx-2 lg:mx-3'} border-t border-gray-200 dark:border-gray-700`}></div> */}
 
             {/* Secondary Menu */}
             <div className={`${isOpen ? 'px-3' : 'px-2 lg:px-3'} space-y-1`}>
@@ -194,10 +194,11 @@ const Sidebar = ({ isOpen, isMobileOpen, onClose }) => {
                 </Link>
               ))}
             </div>
+            
           </nav>
 
           {/* Sidebar Footer - Only show when expanded */}
-          {(isOpen || isMobileOpen) && (
+          {/* {(isOpen || isMobileOpen) && (
             <div className="p-4 border-t border-gray-200 dark:border-gray-700">
               <div className="bg-gradient-to-br from-primary-50 to-primary-100/50 dark:from-primary-900/20 dark:to-primary-900/10 rounded-xl p-4 border border-primary-200 dark:border-primary-800">
                 <div className="flex items-center space-x-3 mb-3">
@@ -218,7 +219,8 @@ const Sidebar = ({ isOpen, isMobileOpen, onClose }) => {
                 </button>
               </div>
             </div>
-          )}
+          )} */}
+
         </div>
       </aside>
     </>
