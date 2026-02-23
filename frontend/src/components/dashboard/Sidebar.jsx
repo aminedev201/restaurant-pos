@@ -65,6 +65,11 @@ const Sidebar = ({ isOpen, isMobileOpen, onClose }) => {
       icon:  Squares2X2Icon,
       badge: counts.categories,
     },
+    {
+      title: 'Report',
+      path:  '/report',
+      icon:  Squares2X2Icon,
+    },
   ];
 
   const isActive = (path) => location.pathname === path;

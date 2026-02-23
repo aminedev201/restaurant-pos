@@ -22,6 +22,7 @@ import MenuPage from './pages/MenuPage';
 import OrdersPage from './pages/OrdersPage';
 import ProfilePage from './pages/ProfilePage';
 import { NavCountsProvider } from './contexts/NavCountsContext';
+import ReportPage from './pages/ReportPage';
 
 
 // Guest Routes Configuration
@@ -41,6 +42,7 @@ const protectedRoutes = [
   { path: ROUTES.MENU, element: <MenuPage /> },
   { path: ROUTES.ORDERS, element: <OrdersPage /> },
   { path: ROUTES.PROFILE, element: <ProfilePage /> },
+  { path: ROUTES.REPORT, element: <ReportPage /> },
 ];
 
 const App = () => {

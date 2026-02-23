@@ -16,7 +16,7 @@ const NotFoundPage = () => {
           404
         </h1>
         <p className="text-xl text-gray-600 dark:text-gray-400 mb-8">
-          Page not found
+         PAGE NOT FOUND
         </p>
         <Link
           to={ROUTES.HOME}

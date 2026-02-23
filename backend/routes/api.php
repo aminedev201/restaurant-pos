@@ -6,6 +6,7 @@ use App\Http\Controllers\Api\Admin\ItemController;
 use App\Http\Controllers\Api\Admin\NavBadgesController;
 use App\Http\Controllers\Api\Admin\OrderController;
 use App\Http\Controllers\Api\Admin\ProfileController;
+use App\Http\Controllers\Api\Admin\ReportController;
 use App\Http\Controllers\Api\Admin\StatsController;
 use Illuminate\Support\Facades\Route;
 
@@ -68,5 +69,7 @@ Route::middleware(['auth:sanctum', 'verified', 'user.status'])->group(function (
 
     // Statistics
     Route::get('stats', [StatsController::class, 'index']);
+    // Report
+    Route::get('reports', [ReportController::class, 'index']);
 
 });

@@ -12,4 +12,5 @@ export const ROUTES = {
   MENU: '/menu',
   ORDERS: '/orders',
   PROFILE: '/profile',
+  REPORT: '/report',
 };

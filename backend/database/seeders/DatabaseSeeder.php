@@ -15,20 +15,20 @@ class DatabaseSeeder extends Seeder
     {
         // User::factory(10)->create();
 
-        // User::factory()->create([
-        //     'name' => 'Amine fakkar',
-        //     'email' => 'amine@gmail.com',
-        //     'password' => 'Amine123@@',
-        //     'email_verified_at' => now(),
-        // ]);
+        User::factory()->create([
+            'name' => 'Amine fakkar',
+            'email' => 'amine@gmail.com',
+            'password' => 'Amine123@@',
+            'email_verified_at' => now(),
+        ]);
 
-        for ($i=0; $i < 20; $i++) {
-            User::factory()->create([
-                'name' => 'Amine fakkar',
-                'email' => 'amine'.$i.'@gmail.com',
-                'password' => 'Amine123@@',
-                'email_verified_at' => now(),
-            ]);
-        }
+        // for ($i=1; $i <= 20; $i++) {
+        //     User::factory()->create([
+        //         'name' => 'Amine fakkar',
+        //         'email' => 'amine'.$i.'@gmail.com',
+        //         'password' => 'Amine123@@',
+        //         'email_verified_at' => now(),
+        //     ]);
+        // }
     }
 }
